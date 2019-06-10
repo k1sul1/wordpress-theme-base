@@ -19,8 +19,20 @@ $app = app([
   'languageSlugs' => ['en']
 ]);
 
-add_action('wp_enqueue_scripts', function() use ($app) {
-  $siteurl = get_site_url();
+$siteurl = get_site_url();
+
+/**
+ * Pass useful data to the frontend, instead of crawling these from the DOM.
+ * Path can be used for dynamic imports, and wpurl for making HTTP requests,
+ * if you absolutely have to have absolute urls in your code.
+ */
+$localizeData = [
+  'lang' => $app->i18n->getLanguage(),
+  'path' => str_replace($siteurl, '', get_stylesheet_directory_uri()),
+  'wpurl' => $siteurl
+];
+
+add_action('wp_enqueue_scripts', function() use ($app, $localizeData) {
   $jshandle = $app->enqueue('client.js', 'client');
 
   /**
@@ -32,15 +44,15 @@ add_action('wp_enqueue_scripts', function() use ($app) {
     $csshandle = $app->enqueue('client.css', 'client');
   }
 
-  /**
-   * Pass useful data to the frontend, instead of crawling these from the DOM.
-   * Path can be used for dynamic imports, and wpurl for making HTTP requests, if you absolutely have to have absolute urls.
-   */
-  wp_localize_script($jshandle, 'wptheme', [
-    'lang' => $app->i18n->getLanguage(),
-    'path' => str_replace($siteurl, '', get_stylesheet_directory_uri()),
-    'wpurl' => $siteurl
-  ]);
+  wp_localize_script($jshandle, 'wptheme', $localizeData);
+});
+
+add_action('admin_enqueue_scripts', function() use ($app, $localizeData) {
+  $siteurl = get_site_url();
+  $jshandle = $app->enqueue('admin.js', 'admin');
+  $csshandle = $app->enqueue('admin.css', 'admin');
+
+  wp_localize_script($jshandle, 'wptheme', $localizeData);
 });
 
 /**

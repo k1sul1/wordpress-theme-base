@@ -22,20 +22,24 @@ class App {
   }
 
   public function enqueue(string $assetName, string $manifest, $dependencies = []) {
-    $filename = $this->getAssetFilename($assetName, $manifest);
-    $basename = basename($filename);
+    $isJS = strpos($assetName, '.js') !== false;
+    $isCSS = !$isJS && strpos($assetName, '.css') !== false;
     $isWDS = isWDS(); // To force cache disable and to run scripts in head in dev
-    $isJS = strpos($filename, '.js') !== false;
-    $isCSS = !$isJS && strpos($filename, '.css') !== false;
+    $filename = $this->getAssetFilename($assetName, $manifest);
 
-    // var_dump($isJS); var_dump($isCSS); die();
+    if (!$filename) {
+      $message = "Unable to enqueue asset $assetName. It wasn't present in the $manifest manifest. ";
 
-    if($isJS) {
-      // die("FUCKING CUNT");
+      if ($isCSS) {
+        $message .= "Are you running webpack-dev-server and trying to access the non-proxied WordPress frontend? ";
+      }
+
+      throw new \Exception($message);
     }
 
+    $basename = basename($filename);
+
     if ($isJS) {
-      // die("PLS");
       wp_enqueue_script(
         "k1-$basename",
         $filename,
@@ -44,7 +48,6 @@ class App {
         !$isWDS
       );
     } else if ($isCSS) {
-      die("PLS2");
       wp_enqueue_style(
         "k1-$basename",
         $filename,
@@ -52,7 +55,7 @@ class App {
         $isWDS ? date('U') : null,
       );
     } else {
-      // throw new \Exception("Unable to enqueue $assetName $filename as it's extension is unsupported");
+      throw new \Exception("Unable to enqueue asset $assetName ($filename) due to type being unsupported");
     }
 
     // Return the handle for use in wp_localize_script
@@ -63,7 +66,7 @@ class App {
     if (isset($this->manifests[$manifest]) && isset($this->manifests[$manifest][$assetName])) {
       $filename = $this->manifests[$manifest][$assetName];
 
-      return get_stylesheet_directory() . "/dist/$filename";
+      return get_stylesheet_directory_uri() . "/dist/$filename";
     }
 
     return false;
@@ -105,18 +108,20 @@ class App {
       require_once $template;
     }
 
-    foreach ($options['blocks'] as $block) {
-      require_once $block;
+    add_action('acf/init', function() use ($options) {
+      foreach ($options['blocks'] as $block) {
+        require_once $block;
 
-      $className = basename($block, '.php');
-      $Class = "\\k1\Blocks\\$className";
+        $className = basename($block, '.php');
+        $Class = "\\k1\Blocks\\$className";
 
-      if (!class_exists($Class)) {
-        throw new \Exception("Block $block is invalid");
+        if (!class_exists($Class)) {
+          throw new \Exception("Block $block is invalid");
+        }
+
+        $instance = new $Class($this);
+        $this->blocks[$instance->getName()] = $instance;
       }
-
-      $instance = new $Class();
-      $this->blocks[$instance->getName()] = $instance;
-    }
+    });
   }
 }

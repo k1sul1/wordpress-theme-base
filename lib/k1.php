@@ -10,12 +10,8 @@ namespace k1;
 /**
  * Check if request originated from webpack-dev-server
  */
-function isWDS($req = null) {
-  if (!$req) {
-    $req = $_REQUEST;
-  }
-
-  return !empty($req["HTTP_X_PROXY"]) && $req["HTTP_X_PROXY"] === 'webpack-dev-server';
+function isWDS() {
+  return !empty($_SERVER["HTTP_X_PROXY"]) && $_SERVER["HTTP_X_PROXY"] === 'webpack-dev-server';
 }
 
 function env() {
@@ -61,4 +57,93 @@ function slugify(string $string = '') {
   $string = str_replace(' ', '-', $string);
   $string = strtolower($string);
   return preg_replace('/[^A-Za-z0-9\-]/', '', $string);
+}
+
+/**
+ * Dives into deep arrays using dot notation and returns a single value, or the default
+ * if no value was found. Great for providing fallback or default values.
+ *
+ * dotty($authorData, "name", "John Doe")
+ *
+ * @param array $data
+ * @param string $key
+ * @param mixed $default
+ */
+function dotty($data = [], $key = "", $default = false) {
+  if (!empty($data)) {
+    if (strpos($key, ".") > -1) {
+      $levels = explode(".", $key);
+      $value = $data;
+
+      for ($level = 0; $level < count($levels); $level++) {
+        $value = $value[$levels[$level]] ?? $default;
+      }
+
+      if (is_array($value) && empty($value)) {
+        return $default;
+      }
+
+      return $value;
+    }
+
+    return $data[$key] ?? $default;
+  }
+
+  return $default;
+}
+
+/**
+ * Combines default parameters with provided parameters
+ *
+ * @param array $defaults
+ * @param array $provided
+ * @return array
+ */
+function params($defaults = [], $provided = []) {
+  return array_replace_recursive($defaults, array_filter($provided, function ($value) {
+    if (is_bool($value)) {
+      return true; // empty() fails on booleans
+    }
+
+    return !empty($value);
+  }));
+}
+
+/**
+ * For component class names. Produces more readable code and end result.
+ *
+ */
+function className() {
+  $args = func_get_args();
+  $classes = PHP_EOL . join(PHP_EOL, $args);
+
+  return "class=\"$classes\"";
+}
+
+function title($title = null) {
+  if (!$title) {
+    $title = get_the_title();
+  }
+
+  return apply_filters("the_title", $title);
+}
+
+function content($content = null) {
+  if (!$content) {
+    $content = get_the_content();
+  }
+
+  return apply_filters("the_content", $content);
+}
+
+function wrapper($wrappable, $options = []) {
+  $options = params([
+    "element" => "div",
+    "className" => "wrapper",
+  ], $options);
+
+  $tag = $options["element"];
+  $class = $options["className"];
+
+  return "<$tag class='$class'>$wrappable</$tag>";
 }

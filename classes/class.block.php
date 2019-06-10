@@ -8,8 +8,23 @@ abstract class Block {
   protected $name = null;
 
   /**
-   * In order to have less boilerplate, we extract the class name the resulting class.
-   * That name is used to call the block template function.
+   * If you define your own constructor, be sure to call
+   * parent::__construct in it.
+   */
+  public function __construct() {
+    $this->register($this->getSettings());
+  }
+
+  public function register($data) {
+    if (!function_exists('acf_register_block')) {
+      throw new \Exception('ACF Pro is required to register blocks. If you don\'t have ACF Pro, remove all blocks from the /blocks folder.');
+    }
+
+    acf_register_block($data);
+  }
+
+  /**
+   * In order to have less boilerplate, we extract the class name from the resulting class.
    */
   public function getName() {
     if (!$this->name) {
@@ -17,6 +32,25 @@ abstract class Block {
     }
 
     return $this->name;
+  }
+
+  /**
+   * Chances are your block doesn't require changing anything, and you're good with the defaults.
+   * If not, just redefine this function in your block.
+   */
+  public function getSettings() {
+    return [
+      'title' => $this->getName(),
+      'name' => strtolower($this->getName()),
+      'render_callback' => [$this, 'render'],
+      'mode' => 'edit',
+      'category' => 'layout',
+      'supports' => [
+        'align' => false,
+        'mode' => true,
+        'multiple' => true,
+      ]
+    ];
   }
 
   /**

@@ -126,8 +126,8 @@ function get_image_data($image = null, $size = 'medium') {
   // Cache the call so we won't have to fetch the data again and again...
 
   $key = "k1sul1_gid_$id";
-  $is_dev = defined("WP_DEBUG") ? WP_DEBUG : false;
-  if ($is_dev) {
+  $isDev = defined("WP_DEBUG") ? WP_DEBUG : false;
+  if ($isDev) {
     $transient = get_transient($key);
   } else {
     $transient = false;
