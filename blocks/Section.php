@@ -5,6 +5,14 @@ use \k1\Templates as T;
 
 /**
  * Sample implementation. Works just fine in the frontend but admin is messy.
+ * This is one way of having easy control over element sizing and colourschemes,
+ * but not necessarily the way I'd recommend. This method worked nicely with flexible content
+ * but Gutenberg is different.
+ *
+ * It's better to create classes like .align-center, .width-100, and apply them to your blocks.
+ * Use the clone field to your advantage.
+ *
+ * This also shows that if you don't like "mixing HTML with PHP", you don't have to with this theme.
  */
 class Section extends \k1\Block {
   public function render($data = []) {
