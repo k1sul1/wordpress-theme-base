@@ -40,10 +40,12 @@ const devServerPlugin = (opts = {}) => {
     // exiting with error status kills the cat; pretend everything is fine
     process.exit(0)
   }
-  const host = process.env.HOST || config.wdsUrl || 'localhost'
+
+  const { webpack } = config
+  const host = process.env.HOST || webpack.serverAddress || 'localhost'
   const port = process.env.PORT || 8080;
-  const isHTTPS = config.proxy.includes('https')
-  const publicPath = isHTTPS ? 'https' : 'http' + `://${host}:${port}${config.publicPath}`
+  const isHTTPS = webpack.wordpressURL.includes('https')
+  const publicPath = isHTTPS ? 'https' : 'http' + `://${host}:${port}${webpack.publicPath}`
 
   return merge({
     devServer: {
@@ -58,7 +60,7 @@ const devServerPlugin = (opts = {}) => {
       },
 
       watchOptions: {
-        poll: isWindows || isMac ? undefined : 1000, // Linux users get no love, blame webpack
+        poll: isWin || isMac ? undefined : 1000, // Linux users get no love, blame webpack
         aggregateTimeout: 300,
       },
 
@@ -69,7 +71,7 @@ const devServerPlugin = (opts = {}) => {
 
       proxy: {
         '/': {
-          target: config.proxy,
+          target: webpack.wordpressURL,
           changeOrigin: true,
           autoRewrite: true,
           secure: false,
@@ -125,7 +127,7 @@ const assetLoaderPlugin = (env) => ({
           loader: 'file-loader',
           options: Object.assign({}, {
             name: env === 'production' ? '[name].[chunkhash].[ext]' : '[name].[ext]',
-          }, options),
+          }),
         },
       },
 
@@ -138,6 +140,18 @@ const assetLoaderPlugin = (env) => ({
             loader: 'file-loader',
           },
         ],
+      },
+
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            babelrc: true,
+            cacheDirectory: true,
+          }
+        },
       },
     ],
   },
@@ -202,8 +216,8 @@ const genericPlugins = (env) => ({
       },
     }),
 
-    env !== 'development' && new Terser({ parallel: true }),
-    env !== 'development' && new OptimizeCSSAssets(),
+    // env !== 'development' ? new Terser({ parallel: true }) : null,
+    // env !== 'development' ? new OptimizeCSSAssets() : null,
   ]
 })
 
@@ -218,7 +232,6 @@ const modules = {
   cssExtractPlugin,
   assetLoaderPlugin,
   sourcemapPlugin,
-  jsTranspilePlugin,
 }
 
 const paths = {

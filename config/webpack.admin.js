@@ -31,9 +31,8 @@ module.exports = ({ NODE_ENV: env }) => merge({
     },
   },
   genericPlugins(env),
-  jsTranspilePlugin(env),
   assetLoaderPlugin(env),
-  manifestPlugin(env),
+  manifestPlugin({ fileName: 'admin-manifest.json' }),
   sourcemapPlugin(env) ,
   env === 'development' ? devConf(env) : prodConf(env)
 )
