@@ -2,7 +2,7 @@
 /**
  * Helpers related to taxonomies.
  */
-namespace Vincit\Taxonomy;
+namespace k1\Taxonomy;
 
 /**
  * Returns the "primary" term, which means the first that is in the list. Respects term order.

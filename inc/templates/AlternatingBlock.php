@@ -1,7 +1,7 @@
 <?php
-namespace Vincit\Template;
+namespace k1\Template;
 
-use \Vincit\Media;
+use \k1\Media;
 
 /**
  * Primarily meant for pagebuilder usage, but works just as fine when called manually.

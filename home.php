@@ -3,6 +3,6 @@
  * The home page. Uses archive.
  * See http://wphierarchy.com for help.
  */
-namespace Vincit;
+namespace k1;
 
 require "archive.php";

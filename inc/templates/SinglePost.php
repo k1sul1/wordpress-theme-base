@@ -1,7 +1,7 @@
 <?php
-namespace Vincit\Template;
+namespace k1\Template;
 
-use \Vincit\Media;
+use \k1\Media;
 
 /**
  * Singular post template. Not to be confused with singular.php!

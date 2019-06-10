@@ -29,14 +29,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Vincit/wordpress-theme-base.git"
+    "url": "git+https://github.com/k1/wordpress-theme-base.git"
   },
   "author": "",
   "license": "GPL-2.0",
   "bugs": {
-    "url": "https://github.com/Vincit/wordpress-theme-base/issues"
+    "url": "https://github.com/k1/wordpress-theme-base/issues"
   },
-  "homepage": "https://github.com/Vincit/wordpress-theme-base#readme",
+  "homepage": "https://github.com/k1/wordpress-theme-base#readme",
   "devDependencies": {
     "autoprefixer": "^7.2.4",
     "babel-core": "^6.26.0",

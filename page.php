@@ -3,6 +3,6 @@
  * Singular page for pages.
  */
 
-namespace Vincit;
+namespace k1;
 
 require "singular.php";

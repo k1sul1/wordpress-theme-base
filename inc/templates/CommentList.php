@@ -1,5 +1,5 @@
 <?php
-namespace Vincit\Template;
+namespace k1\Template;
 
 /**
  * Lists comments under the current post context.

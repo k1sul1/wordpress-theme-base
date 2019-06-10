@@ -2,7 +2,7 @@
 /**
  * Add new image sizes and edit the default ones.
  */
-namespace Vincit\ImageSizes;
+namespace k1\ImageSizes;
 
 add_action("after_setup_theme", function () {
  // add_image_size

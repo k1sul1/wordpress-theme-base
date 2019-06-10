@@ -2,9 +2,9 @@
 /**
  * The header template. Included by get_header().
  */
-namespace Vincit;
+namespace k1;
 
-use \Vincit\Options; ?>
+use \k1\Options; ?>
 
   </main>
   <footer class="site-footer">

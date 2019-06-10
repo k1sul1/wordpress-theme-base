@@ -2,7 +2,7 @@
 /**
  * The search page. Will list search results.
  */
-namespace Vincit;
+namespace k1;
 
 get_header(); ?>
 
@@ -17,7 +17,7 @@ get_header(); ?>
   </h1>
 
   <?php
-  $builder = \Vincit\Pagebuilder::instance();
+  $builder = \k1\Pagebuilder::instance();
 
   echo $builder->block("PostList");
   echo $builder->block("Pagination") ?>

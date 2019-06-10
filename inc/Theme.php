@@ -2,7 +2,7 @@
 /**
  * Theme related configuration.
  */
-namespace Vincit\Theme;
+namespace k1\Theme;
 
 add_action("after_setup_theme", function () {
   add_theme_support("custom-logo", [
@@ -28,7 +28,7 @@ add_action("after_setup_theme", function () {
 });
 
 function configure_relevanssi($force = false) {
-  if ($force || !get_option("vincit_relevanssi_configured")) {
+  if ($force || !get_option("k1sul1_relevanssi_configured")) {
     /* Legend
        *: Comma separated list of IDs.
     */
@@ -90,6 +90,6 @@ Score: %score%
       \update_option("relevanssi_$key", $value);
     }
 
-    \update_option("vincit_relevanssi_configured", time());
+    \update_option("k1sul1_relevanssi_configured", time());
   }
 } configure_relevanssi();

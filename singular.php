@@ -3,13 +3,13 @@
  * Singular content. Used by posts, pages and custom post types by default.
  * See https://wphierarchy.com for help.
  */
-namespace Vincit;
+namespace k1;
 
 get_header(); ?>
 
 <div class="singular">
   <?php
-  $builder = \Vincit\Pagebuilder::instance();
+  $builder = \k1\Pagebuilder::instance();
 
   while (have_posts()) { the_post();
     echo $builder->block("SinglePost", [

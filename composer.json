@@ -1,11 +1,11 @@
 {
-    "name": "vincit/wordpress-theme-base",
+    "name": "k1sul1/wordpress-theme-base",
     "type": "wordpress-theme",
     "license": "GPL-2.0",
     "authors": [
         {
             "name": "Christian Nikkanen",
-            "email": "christian.nikkanen@vincit.com"
+            "email": "christian.nikkanen@k1sul1.com"
         }
     ],
     "minimum-stability": "stable",

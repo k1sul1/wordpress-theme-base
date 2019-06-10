@@ -8,7 +8,7 @@
 get_header(); ?>
 
 <div class="pagebuilder">
-  <?=\Vincit\Pagebuilder::instance()->getLayout()?>
+  <?=\k1\Pagebuilder::instance()->getLayout()?>
 </div>
 
 <?php get_footer();

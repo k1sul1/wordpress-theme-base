@@ -1,7 +1,7 @@
 <?php
-namespace Vincit\Template;
+namespace k1\Template;
 
-use \Vincit\Media;
+use \k1\Media;
 
 /**
  * PostListItem is meant to be used in conjuction with PostList, but it work as stand alone also.

@@ -2,7 +2,7 @@
 /**
  * Register custom post types and taxonomies here.
  */
-namespace Vincit\CCT;
+namespace k1\CCT;
 
 /* add_action('init', function () {
   register_post_type(

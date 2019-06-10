@@ -1,5 +1,5 @@
 <?php
-namespace Vincit\Template;
+namespace k1\Template;
 
 /**
  * Renders the sample widgets.

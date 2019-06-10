@@ -1,5 +1,5 @@
 <?php
-namespace Vincit\Template;
+namespace k1\Template;
 
 /**
  * Generic hero block with an optional CTA button

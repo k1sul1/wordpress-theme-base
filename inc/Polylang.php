@@ -4,7 +4,7 @@
  * Heavily "inspired" by aucor/aucor-starter localization
  */
 
-namespace Vincit\Polylang {
+namespace k1\Polylang {
 
   function strings() {
     return [
@@ -61,7 +61,7 @@ namespace {
    * @param mixed $lang
    */
   function gs($key, $lang = null) {
-    $strings = \Vincit\Polylang\strings();
+    $strings = \k1\Polylang\strings();
 
     if (isset($strings[$key])) {
       if ($lang === null) {

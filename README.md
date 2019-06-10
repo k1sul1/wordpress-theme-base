@@ -1,4 +1,4 @@
-# Vincit WordPress theme base
+# k1 WordPress theme base
 Bleeding edge starter theme.
 
 ## Features
@@ -36,7 +36,7 @@ Bleeding edge starter theme.
 ## Screenshots
 Nope.
 
-[View the demo instead](https://wordpress.vincit.io).
+[View the demo instead](https://wordpress.k1sul1.io).
 ## Requirements / dependencies
 - PHP 7
 - Composer
@@ -66,18 +66,18 @@ CORS isn't a problem normally, as we set `header("Access-Control-Allow-Origin: *
 You're going to have a very bad time if you ignore this. If it's not a direct error, it's going to be a badly coded plugin that's going to cause it.
 
 ## Usage
-Clone the theme or install it with the installer that ships with [Vincit/wordpress](https://github.com/Vincit/wordpress). Composer is also an option.
+Clone the theme or install it with the installer that ships with [k1/wordpress](https://github.com/k1/wordpress). Composer is also an option.
 ```sh
-git clone git@github.com:Vincit/wordpress-theme-base.git themename
+git clone git@github.com:k1/wordpress-theme-base.git themename
 
-# OR (with first vagrant up if using Vincit/wordpress)
+# OR (with first vagrant up if using k1/wordpress)
 # Runs automatically. Answer yes to the question when prompted.
 
-# OR (Vincit/wordpress installer)
+# OR (k1/wordpress installer)
 ./install # Follow the instructions
 
 # OR (composer)
-composer require vincit/wordpress-theme-base # append dev-master to get the latest version (potentially unstable)
+composer require k1sul1/wordpress-theme-base # append dev-master to get the latest version (potentially unstable)
 ```
 
 Install dependencies:
@@ -155,9 +155,9 @@ In this theme, templates live in the `inc/templates` folder, and have the follow
 
 ```php
 <?php
-namespace Vincit\Template;
+namespace k1\Template;
 
-// use \Vincit\Media; // Optional use declarations, get image helpers or similar
+// use \k1\Media; // Optional use declarations, get image helpers or similar
 
 /**
  * Is actually a link, but looks like a button.
@@ -193,7 +193,7 @@ Then, we're checking that the button has a text, and a link, or return early, an
 Unfortunately, JSX isn't a thing in PHP, so we're forced to resort into side effects. Whenever you call `Button`, everything that's not inside PHP tags is immediately outputted, so you can't save the button to a variable:
 
 ```
-// Inside another template, under namespace \Vincit\Template
+// Inside another template, under namespace \k1\Template
 
 $button = Button(["text" => "Click me!", "link" => "#"]);
 
@@ -205,7 +205,7 @@ This may, or may not be an actual problem, depending on your use case. One solut
 
 
 ```php
-$builder = \Vincit\Pagebuilder::instance();
+$builder = \k1\Pagebuilder::instance();
 $button = $builder->block("Button", ["text" => "Click me!", "link" => "#"]);
 // Equivalent to calling Button() manually, but with output buffer and error is catchable.
 
@@ -213,10 +213,10 @@ echo get_the_content();
 echo $button; // Button is after the content!
 ```
 
-When the current namespace is Vincit\Template, you can and probably should call the template functions directly, instead of going through the pagebuilder class. When working with files such as `singular.php`, use the class.
+When the current namespace is k1\Template, you can and probably should call the template functions directly, instead of going through the pagebuilder class. When working with files such as `singular.php`, use the class.
 
 ```php
-$builder = \Vincit\Pagebuilder::instance();
+$builder = \k1\Pagebuilder::instance();
 
 while (have_posts()) { the_post();
   echo $builder->block("SinglePost", [
@@ -231,7 +231,7 @@ while (have_posts()) { the_post();
 }
 ```
 
-It's possible to build highly dynamic but maintainable components this way. You can create a generic [PostList](https://github.com/Vincit/wordpress-theme-base/blob/master/inc/templates/PostList.php) component that uses the main query by default, but switches to a custom query if it's supplied and even supply a different (template) function.
+It's possible to build highly dynamic but maintainable components this way. You can create a generic [PostList](https://github.com/k1/wordpress-theme-base/blob/master/inc/templates/PostList.php) component that uses the main query by default, but switches to a custom query if it's supplied and even supply a different (template) function.
 
 Try it out by modifying the PostList call on `index.php`.
 
@@ -282,8 +282,8 @@ Change the value in package.json.
 
 ### I did the above but HMR still doesn't work?
 Git gud. HMR requires you to write your code accordingly, example:
-- [Module](https://github.com/Vincit/wordpress-theme-base/blob/master/src/js/components/SampleWidgets/Clock.js)
-- [index.js](https://github.com/Vincit/wordpress-theme-base/blob/master/src/js/components/SampleWidgets/index.js)
+- [Module](https://github.com/k1/wordpress-theme-base/blob/master/src/js/components/SampleWidgets/Clock.js)
+- [index.js](https://github.com/k1/wordpress-theme-base/blob/master/src/js/components/SampleWidgets/index.js)
 
 If using React, you should be set.
 

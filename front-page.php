@@ -2,13 +2,13 @@
 /**
  * The static front page template.
  */
-namespace Vincit;
+namespace k1;
 
 get_header(); ?>
 
 <div class="container frontpage">
   <?php
-  $builder = \Vincit\Pagebuilder::instance();
+  $builder = \k1\Pagebuilder::instance();
 
   while (have_posts()) { the_post();
     echo $builder->block("SinglePost", [

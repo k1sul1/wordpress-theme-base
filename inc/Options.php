@@ -3,7 +3,7 @@
  * Register options pages (ACF) and provide functions to do stuff with options.
  * ACF options pages are stored in wp_options.
  */
-namespace Vincit\Options;
+namespace k1\Options;
 
 if (function_exists("acf_add_options_page")) {
   $parent = acf_add_options_page([

@@ -3,7 +3,7 @@
  * Helpers and template tags, related to posts.
  */
 
-namespace Vincit\Post;
+namespace k1\Post;
 
 /**
  * Return post excerpt. Tries to get a dedicated custom field first, then falls
@@ -54,8 +54,8 @@ function get_preview($post_id = null) {
 function excerpt($post_id = null, $fallback = true) {
   $excerpt = get_excerpt($post_id, $fallback);
 
-  return \Vincit\tag([
-    "<div class='vincit-excerpt'>",
+  return \k1\tag([
+    "<div class='k1sul1-excerpt'>",
     strpos($excerpt, "<p>") > -1
     ? $excerpt
     : "<p>$excerpt</p>",
@@ -73,8 +73,8 @@ function excerpt($post_id = null, $fallback = true) {
 function preview($word_count = 30, $more = "&hellip;", $post_id = null) {
   $preview = get_preview($post_id);
 
-  return \Vincit\tag([
-    "<div class='vincit-preview'>",
+  return \k1\tag([
+    "<div class='k1sul1-preview'>",
     "<p>" . wp_trim_words($preview, $word_count, $more) . "</p>",
     "</div>"
   ]);

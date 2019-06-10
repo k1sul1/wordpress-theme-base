@@ -2,7 +2,7 @@ import { el } from 'redom';
 
 export default function translationLinks() {
   const manageTranslationsNav = document.querySelector('#string-translation .tablenav.bottom');
-  const manageLink = document.querySelector('#vincit-manage-translations');
+  const manageLink = document.querySelector('#k1sul1-manage-translations');
 
   console.log(manageTranslationsNav);
 

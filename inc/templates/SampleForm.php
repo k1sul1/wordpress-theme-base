@@ -1,5 +1,5 @@
 <?php
-namespace Vincit\template;
+namespace k1\template;
 
 /**
  * Sample form that's only useful for showcasing some form controls.

@@ -2,9 +2,9 @@
 /**
  * The header template. Included by get_header().
  */
-namespace Vincit;
+namespace k1;
 
-use \Vincit\Media;
+use \k1\Media;
 
 ?>
 <!doctype html>
@@ -43,9 +43,9 @@ use \Vincit\Media;
     } else { ?>
       <a href="<?=home_url()?>" class="custom-logo-link custom-logo-unset" rel="home" itemprop="url">
         <img
-          src="https://vincit.fi/wp-content/themes/vincit.com/images/Vincit_tirppa_white.png"
+          src="https://kisu.li/wp-content/themes/k1sul1.com/images/k1_tirppa_white.png"
           class="custom-logo"
-          alt="Vincit logo"
+          alt="k1 logo"
           itemprop="logo"
         >
       </a>

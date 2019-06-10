@@ -3,7 +3,7 @@
  * Settings and functions related to development. May be dangerous
  * in production, never run WP_DEBUG on a production site with live visitors.
  */
-namespace Vincit\Development {
+namespace k1\Development {
 
   /* Running WP_DEBUG in production will get you into trouble. */
   if (defined("WP_DEBUG") &&  \WP_DEBUG) {
@@ -43,7 +43,7 @@ namespace {
 
   if (!function_exists("d")) {
     function d() {
-      return \Vincit\Development\dump(...func_get_args());
+      return \k1\Development\dump(...func_get_args());
     }
   }
 

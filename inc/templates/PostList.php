@@ -1,5 +1,5 @@
 <?php
-namespace Vincit\Template;
+namespace k1\Template;
 
 /**
  * Component that lists posts from the current query context, or uses the provided query.
@@ -29,7 +29,7 @@ function PostList($data = []) {
     $data["template"]([
       "title" => get_the_title(),
       "image" => get_post_thumbnail_id(),
-      "content" => \Vincit\Post\excerpt(),
+      "content" => \k1\Post\excerpt(),
       "permalink" => get_permalink(),
     ]);
   } wp_reset_postdata(); ?>

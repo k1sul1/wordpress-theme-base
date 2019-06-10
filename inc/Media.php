@@ -2,7 +2,7 @@
 /**
  * Functions related to media, useful in templates, but not necessary template tags.
  */
-namespace Vincit\Media;
+namespace k1\Media;
 
 function svg($path, $args = []) {
   $data = false;
@@ -21,8 +21,8 @@ function svg($path, $args = []) {
   if (strpos($path, "#") === 0) {
     $template = parse_url(get_template_directory_uri());
 
-    $viewbox = apply_filters("vincit_svg_viewbox", "0 0 10 10", $path, "use");
-    // add_filter("vincit_svg_viewbox", function($viewbox, $path, $type), 10, 3);
+    $viewbox = apply_filters("k1sul1_svg_viewbox", "0 0 10 10", $path, "use");
+    // add_filter("k1sul1_svg_viewbox", function($viewbox, $path, $type), 10, 3);
 
     $classes .= substr($path, 1);
     $data = $wrap("
@@ -44,7 +44,7 @@ function svg($path, $args = []) {
 
 /**
  * Returns an image element.
- * Usage: <?=\Vincit\Media\image($image, 'your-size')?>
+ * Usage: <?=\k1\Media\image($image, 'your-size')?>
  *
  * @param mixed $image
  * @param string $size
@@ -52,7 +52,7 @@ function svg($path, $args = []) {
  * @return string
  */
 function image($image, $size = 'medium', $args = []) {
-  $args = \Vincit\Template\params([
+  $args = \k1\Template\params([
     'responsive' => true,
     'class' => null,
     'sizes' => null,
@@ -66,10 +66,10 @@ function image($image, $size = 'medium', $args = []) {
 
   // If the title contains the filename, don't use a title.
   $has_title = strpos($data['src'], $data['title']) > -1 ? false : true;
-  $class = $args['responsive'] ? 'vincit-image vincit-image--responsive' : 'vincit-image';
+  $class = $args['responsive'] ? 'k1sul1-image k1sul1-image--responsive' : 'k1sul1-image';
   $class = $args['class'] ?: $class;
   
-  return  \Vincit\tag([
+  return  \k1\tag([
     "<img src='$data[src]'",
     $args['responsive'] ? "srcset='$data[srcset]'" : "",
     $args['sizes'] ? "sizes='$args[sizes]'" : "",
@@ -95,10 +95,10 @@ function captioned_image($image, $size, $responsive = true) {
 
   $caption = get_image_data($image, $size)['caption'];
 
-  return \Vincit\tag([
-    "<figure class='vincit-captioned'>",
+  return \k1\tag([
+    "<figure class='k1sul1-captioned'>",
       $image,
-      "<figcaption class='vincit-captioned__caption'>",
+      "<figcaption class='k1sul1-captioned__caption'>",
         $caption,
       "</figcaption>",
     "</figure>"
@@ -125,7 +125,7 @@ function get_image_data($image = null, $size = 'medium') {
 
   // Cache the call so we won't have to fetch the data again and again...
 
-  $key = "vincit_gid_$id";
+  $key = "k1sul1_gid_$id";
   $is_dev = defined("WP_DEBUG") ? WP_DEBUG : false;
   if ($is_dev) {
     $transient = get_transient($key);
@@ -150,7 +150,7 @@ function get_image_data($image = null, $size = 'medium') {
       $key,
       $data,
       apply_filters(
-        'vincit_get_image_data_transient',
+        'k1sul1_get_image_data_transient',
         MINUTE_IN_SECONDS
       )
     );

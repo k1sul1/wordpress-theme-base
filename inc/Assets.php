@@ -2,7 +2,7 @@
 /**
  * This file handles everything related to assets. Fonts, CSS & JavaScript.
  */
-namespace Vincit\Assets;
+namespace k1\Assets;
 
 define("THEMEROOT", get_stylesheet_directory());
 define("CLIENT_MANIFEST", (array) json_decode(file_get_contents(THEMEROOT . "/dist/client-manifest.json")));
@@ -127,9 +127,9 @@ function editor_assets() {
   add_editor_style("dist/$file");
 }
 
-\add_action("wp_enqueue_scripts", "\\Vincit\\Assets\\theme_assets");
-\add_action("admin_enqueue_scripts", "\\Vincit\\Assets\\admin_assets");
-\add_action("login_enqueue_scripts", "\\Vincit\\Assets\\admin_assets");
+\add_action("wp_enqueue_scripts", "\\k1\\Assets\\theme_assets");
+\add_action("admin_enqueue_scripts", "\\k1\\Assets\\admin_assets");
+\add_action("login_enqueue_scripts", "\\k1\\Assets\\admin_assets");
 
 if (is_admin()) {
   editor_assets();

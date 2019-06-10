@@ -4,7 +4,7 @@
  * If it's a template tag, it doesn't belong here.
  */
 
-namespace Vincit\ACF;
+namespace k1\ACF;
 
 $colorsJSON = json_decode(
   file_get_contents(get_template_directory() . "/src/colors.json")

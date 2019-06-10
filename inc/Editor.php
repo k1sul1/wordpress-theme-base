@@ -2,7 +2,7 @@
 /**
  * Tweaks to the editor and edit page.
  */
-namespace Vincit\Editor;
+namespace k1\Editor;
 
 add_filter("mce_buttons_2", function ($buttons) {
   array_unshift($buttons, "styleselect");

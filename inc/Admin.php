@@ -2,7 +2,7 @@
 /**
  * Tweaks to admin live here.
  */
-namespace Vincit\Admin;
+namespace k1\Admin;
 
 if (is_admin()) {
   if (class_exists("GlobalMetaBoxOrder\\Config")) {

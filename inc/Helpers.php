@@ -2,7 +2,7 @@
 /**
  * Helpers that you don't want to "pollute" the root namespace with.
  */
-namespace Vincit\Helpers;
+namespace k1\Helpers;
 
 /**
  * Dives into deep arrays using dot notation and returns a single value, or the default

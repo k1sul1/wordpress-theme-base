@@ -1,8 +1,8 @@
 <?php
 /**
- * The Vincit namespace. Useful for generic functions with generic names.
+ * The k1 namespace. Useful for generic functions with generic names.
  */
-namespace Vincit;
+namespace k1;
 
 /**
  * Returns current env, defaulting to production if none is set.

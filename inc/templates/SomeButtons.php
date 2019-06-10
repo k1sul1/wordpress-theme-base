@@ -1,8 +1,8 @@
 <?php
-namespace Vincit\Template;
+namespace k1\Template;
 
-use \Vincit\Options;
-use \Vincit\Media;
+use \k1\Options;
+use \k1\Media;
 
 /**
  * Prints share buttons if they're configured on the options pages.

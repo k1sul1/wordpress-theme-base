@@ -3,17 +3,17 @@
  * Generic filters when there's no better place to put them
  * and you're too lazy to create a new one..
  */
-namespace Vincit\GenericFilters;
+namespace k1\GenericFilters;
 
 function title_prefix($title) {
   $dev = "D";
   $staging = "S";
 
-  if (\Vincit\is_prod() && is_user_logged_in()) {
+  if (\k1\is_prod() && is_user_logged_in()) {
     return $title;
-  } else if (\Vincit\is_dev()) {
+  } else if (\k1\is_dev()) {
     return "[$dev] $title";
-  } elseif (!empty($_COOKIE["seravo_shadow"]) || \Vincit\is_staging()) {
+  } elseif (!empty($_COOKIE["seravo_shadow"]) || \k1\is_staging()) {
     return "[$staging] $title";
   }
 
@@ -28,7 +28,7 @@ function title_prefix($title) {
   ];
 
   foreach ($domains as $domain => $tag) {
-    if (strpos(\Vincit\current_url(), $domain) > -1) {
+    if (strpos(\k1\current_url(), $domain) > -1) {
       if ($tag === $production) {
         if (!is_user_logged_in()) {
           return $title;
@@ -40,9 +40,9 @@ function title_prefix($title) {
   return $title;
 }
 
-add_filter("the_seo_framework_pro_add_title", "\\Vincit\\GenericFilters\\title_prefix");
-add_filter("admin_title", "\\Vincit\\GenericFilters\\title_prefix");
-add_filter("wp_title", "\\Vincit\\GenericFilters\\title_prefix");
+add_filter("the_seo_framework_pro_add_title", "\\k1\\GenericFilters\\title_prefix");
+add_filter("admin_title", "\\k1\\GenericFilters\\title_prefix");
+add_filter("wp_title", "\\k1\\GenericFilters\\title_prefix");
 
 /**
  * Strip empty paragraphs
@@ -53,7 +53,7 @@ function strip_empty_paragraphs($content) {
   return str_replace("<p>&nbsp;</p>", "", $content);
 }
 
-add_filter("the_content", "\\Vincit\\GenericFilters\\strip_empty_paragraphs");
+add_filter("the_content", "\\k1\\GenericFilters\\strip_empty_paragraphs");
 
 // Disable "traffic lights"
 add_filter("the_seo_framework_show_seo_column", "__return_false");
@@ -81,10 +81,10 @@ function set_absolute_image_url($image, $id) {
 }
 
 // OG image
-add_filter("the_seo_framework_ogimage_output", "\\Vincit\\GenericFilters\\set_absolute_image_url", 10, 2);
+add_filter("the_seo_framework_ogimage_output", "\\k1\\GenericFilters\\set_absolute_image_url", 10, 2);
 
 // Twitter card image
-add_filter("the_seo_framework_twitterimage_output", "\\Vincit\\GenericFilters\\set_absolute_image_url", 10, 2);
+add_filter("the_seo_framework_twitterimage_output", "\\k1\\GenericFilters\\set_absolute_image_url", 10, 2);
 
 
 /**
@@ -97,7 +97,7 @@ function embed_wrap($cache) {
   return '<div class="responsive-embed">' . $cache . '</div>';
 }
 
-add_filter('embed_oembed_html', '\\Vincit\\GenericFilters\\embed_wrap');
+add_filter('embed_oembed_html', '\\k1\\GenericFilters\\embed_wrap');
 
 add_action('after_setup_theme', function () {
   remove_filter('embed_oembed_html', 'Roots\\Soil\\CleanUp\\embed_wrap');

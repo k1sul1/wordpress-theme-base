@@ -4,7 +4,7 @@
  * In reality you probably want to avoid the DOM and PHP, as nothing ever works.
  */
 
-namespace Vincit\DOM;
+namespace k1\DOM;
 
 /**
  * DOMDocument adds "missing" doctype and head & body tags automatically

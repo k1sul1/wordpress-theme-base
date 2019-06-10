@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="vincit/wordpress">
+<ruleset name="k1sul1/wordpress">
   <description>PSR2, but saner. https://gist.github.com/gsherwood/9d22f634c57f990a7c64</description>
 
   <arg name="tab-width" value="2"/>

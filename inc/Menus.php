@@ -2,7 +2,7 @@
 /**
  * Register and tweak menus here.
  */
-namespace Vincit\Menus;
+namespace k1\Menus;
 
 add_action("init", function () {
   register_nav_menus([

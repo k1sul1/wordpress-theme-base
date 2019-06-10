@@ -1,5 +1,5 @@
 <?php
-namespace Vincit;
+namespace k1;
 
 /**
  * Pagebuilder class is used to build layouts from flexible content fields,
@@ -14,7 +14,7 @@ class Pagebuilder {
     $this->templates = $this->loadTemplates();
 
     if ($doingItWrong) {
-      throw new \Exception("You shouldn't create a new instance of the pagebuilder. Use \Vincit\Pagebuilder::instance().");
+      throw new \Exception("You shouldn't create a new instance of the pagebuilder. Use \k1\Pagebuilder::instance().");
     }
 
     $this->hasACF = function_exists("get_field");
@@ -38,7 +38,7 @@ class Pagebuilder {
       require_once($filename);
 
       $template = str_replace(".php", "", basename($filename));
-      $function = "\\Vincit\\template\\$template";
+      $function = "\\k1\\template\\$template";
       $templates[$template] = $function;
 
       if (!is_callable($function)) {
@@ -51,7 +51,7 @@ class Pagebuilder {
 
   /**
    * Method used to render a template into string.
-   * There's nothing wrong with calling \Vincit\Template\SinglePost($data)
+   * There's nothing wrong with calling \k1\Template\SinglePost($data)
    * directly, but this class protects you from namespace changes and
    * can deal with errors if necessary.
    *

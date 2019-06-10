@@ -1,5 +1,5 @@
 <?php
-namespace Vincit;
+namespace k1;
 
 /**
  * Class: DB

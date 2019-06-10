@@ -5,14 +5,14 @@
  * in the scope of the template namespace when creating templates.
  */
 
-namespace Vincit\Template;
+namespace k1\Template;
 
 /**
  * Shorthand for dotty helper.
  *
  */
 function v() {
-  return \Vincit\Helpers\dotty(...func_get_args());
+  return \k1\Helpers\dotty(...func_get_args());
 }
 
 

@@ -1,5 +1,5 @@
 <?php
-namespace Vincit\Template;
+namespace k1\Template;
 
 /**
  * Is actually a link, but looks like a button.
