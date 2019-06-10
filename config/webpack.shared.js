@@ -171,7 +171,7 @@ const genericPlugins = (env) => ({
   plugins: [
     new Copy([
       {
-        from: 'assets/img',
+        from: 'img',
       }
     ]),
     new Imagemin({
