@@ -8,12 +8,13 @@ namespace k1\GenericFilters;
 function title_prefix($title) {
   $dev = "D";
   $staging = "S";
+  $production = "P";
 
-  if (\k1\is_prod() && is_user_logged_in()) {
+  if (\k1\isProd() && is_user_logged_in()) {
     return $title;
-  } else if (\k1\is_dev()) {
+  } else if (\k1\isDev()) {
     return "[$dev] $title";
-  } elseif (!empty($_COOKIE["seravo_shadow"]) || \k1\is_staging()) {
+  } elseif (!empty($_COOKIE["seravo_shadow"]) || \k1\isStaging()) {
     return "[$staging] $title";
   }
 
@@ -28,7 +29,7 @@ function title_prefix($title) {
   ];
 
   foreach ($domains as $domain => $tag) {
-    if (strpos(\k1\current_url(), $domain) > -1) {
+    if (strpos(\k1\currentUrl(), $domain) > -1) {
       if ($tag === $production) {
         if (!is_user_logged_in()) {
           return $title;
