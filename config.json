@@ -1,0 +1,7 @@
+{
+  "webpack": {
+    "publicPath": "/wp-content/themes/wordpress-theme-base/dist",
+    "serverAddress": "wordpress.local",
+    "wordpressURL": "http://wordpress.local"
+  }
+}
