@@ -1,6 +1,6 @@
 module.exports = {
   parser: 'babel-eslint',
-  extends: 'airbnb',
+  extends: 'standard',
   rules: {
     'comma-dangle': ['error', 'always-multiline'],
     'indent': ['warn', 2],
@@ -20,7 +20,7 @@ module.exports = {
     'max-len': [1, { 'code': 110, 'ignoreComments': true }],
     'no-confusing-arrow': 0, // It isn't confusing. Hopefully.
     'react/jsx-filename-extension': 0,
-    'react/no-did-mount-set-state': 0, // STFU, you're wrong about this. It's pretty much necessary when using async/await
+    'react/no-did-mount-set-state': 0,
   },
   env: {
     browser: true,
@@ -28,7 +28,7 @@ module.exports = {
   },
   parserOptions: {
     sourceType: 'module',
-    ecmaVersion: 2017,
+    ecmaVersion: 2018,
     'ecmaFeatures': {
       'jsx': true
     }
@@ -36,7 +36,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       webpack: {
-        config: 'build/webpack.client.js',
+        config: 'config/webpack.client.js',
       },
     },
   },
