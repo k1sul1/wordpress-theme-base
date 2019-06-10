@@ -5,6 +5,7 @@
 namespace k1;
 
 use \k1\Media;
+use \k1\Templates as T;
 
 ?>
 <!doctype html>
@@ -42,3 +43,6 @@ use \k1\Media;
   </header>
 
   <main id="content">
+
+
+  <?=T\OpenSection(['width' => '100', 'align' => 'center'])?>
