@@ -36,65 +36,9 @@ use \k1\Media;
     Skip to content
   </a>
 
-  <?php
-  $logo = function () {
-    if (has_custom_logo()) {
-      the_custom_logo();
-    } else { ?>
-      <a href="<?=home_url()?>" class="custom-logo-link custom-logo-unset" rel="home" itemprop="url">
-        <img
-          src="https://kisu.li/wp-content/themes/k1sul1.com/images/k1_tirppa_white.png"
-          class="custom-logo"
-          alt="k1 logo"
-          itemprop="logo"
-        >
-      </a>
-    <?php }
-  };
-  ?>
 
   <header class="site-header">
-    <div class="container">
-      <nav class="main-navigation">
-      <?=$logo()?>
-      <?=wp_nav_menu([
-        // "container" => "nav",
-        "theme_location" => "header-menu",
-      ])?>
-      </nav>
-    </div>
-  </header>
 
-  <header class="mobile-header">
-    <div class="header-bar">
-      <div class="container">
-        <button class="menu-toggle">
-          <?=Media\svg("menu-2.svg", "open-icon")?>
-          <?=Media\svg("close.svg", "close-icon")?>
-          <span class="screen-reader-text">Menu</span>
-        </button>
-
-        <?=$logo()?>
-
-        <button class="search-toggle">
-          <?=Media\svg("search.svg", "open-icon")?>
-          <?=Media\svg("close.svg", "close-icon")?>
-          <span class="screen-reader-text">Menu</span>
-        </button>
-      </div>
-    </div>
-
-    <nav class="mobile-navigation">
-      <?=wp_nav_menu([
-        // "container" => "nav",
-        "theme_location" => "header-menu",
-      ])?>
-    </nav>
-
-    <form class="mobile-search search-form" action="/">
-      <input type="search" name="s" placeholder="Search from site">
-      <button type="submit">Search</button>
-    </form>
   </header>
 
   <main id="content">

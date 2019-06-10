@@ -20,7 +20,7 @@ $app = app([
 ]);
 
 add_action('wp_enqueue_scripts', function() use ($app) {
-  $siturl = get_site_url();
+  $siteurl = get_site_url();
   $jshandle = $app->enqueue('client.js', 'client');
 
   /**
@@ -38,7 +38,7 @@ add_action('wp_enqueue_scripts', function() use ($app) {
    */
   wp_localize_script($jshandle, 'wptheme', [
     'lang' => $app->i18n->getLanguage(),
-    'path' => str_replace($siturl, '', get_stylesheet_directory_uri()),
+    'path' => str_replace($siteurl, '', get_stylesheet_directory_uri()),
     'wpurl' => $siteurl
   ]);
 });
@@ -49,7 +49,7 @@ add_action('wp_enqueue_scripts', function() use ($app) {
  * and use the clone field with the prefix setting in it.
  */
 if (function_exists('acf_add_options_page')) {
-  $languages = $app->getLanguages();
+  $languages = $app->i18n->getLanguages();
   $parent = acf_add_options_page([
     "page_title" => "Options Page",
     "menu_slug" => "acf-opts",
@@ -63,7 +63,7 @@ if (function_exists('acf_add_options_page')) {
     ];
 
     // Set first language as first
-    if ($name === $languages[0]) {
+    if ($lang === $languages[0]) {
       $fields["menu_slug"] = "acf-options";
     }
 

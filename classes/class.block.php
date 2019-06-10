@@ -23,10 +23,11 @@ abstract class Block {
    * Output the block
    */
   public function print(...$params) {
-    $name = $this->getName();
-    $function = "\\k1\\Blocks\\$name";
+    // $name = $this->getName();
+    // $function = "\\k1\\Blocks\\$name";
+    echo $this->render(...$params);
 
-    echo $function(...$params);
+    // echo $function(...$params);
   }
 
   /**

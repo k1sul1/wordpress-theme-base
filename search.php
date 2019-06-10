@@ -15,12 +15,6 @@ get_header(); ?>
   <h1>
     Search: <?=get_search_query()?>
   </h1>
-
-  <?php
-  $builder = \k1\Pagebuilder::instance();
-
-  echo $builder->block("PostList");
-  echo $builder->block("Pagination") ?>
 </div>
 
 <?php get_footer(); ?>

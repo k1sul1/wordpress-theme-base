@@ -15,6 +15,7 @@ const manifestPlugin = (opts = {}) => ({
   plugins: [
     new Manifest({
       fileName: 'client-manifest.json',
+      publicPath: '', // Don't add anything extra, just the filename.
       writeToFileEmit: 'true',
       ...opts,
     })

@@ -11,7 +11,7 @@ class App {
   protected $blocks = [];
   protected static $instance;
 
-  public function init($options = []) {
+  public static function init($options = []) {
     if (self::$instance) {
       return self::$instance;
     }
@@ -25,14 +25,17 @@ class App {
     $filename = $this->getAssetFilename($assetName, $manifest);
     $basename = basename($filename);
     $isWDS = isWDS(); // To force cache disable and to run scripts in head in dev
-    $isJS = strpos($filename, '.js') > -1;
-    $isCSS = !$isJS && strpos($filename, '.css') > -1;
+    $isJS = strpos($filename, '.js') !== false;
+    $isCSS = !$isJS && strpos($filename, '.css') !== false;
 
-    if (!$isJS && !$isCSS) {
-      throw new \Exception("Unable to enqueue $filename as it's extension is unsupported");
+    // var_dump($isJS); var_dump($isCSS); die();
+
+    if($isJS) {
+      // die("FUCKING CUNT");
     }
 
     if ($isJS) {
+      // die("PLS");
       wp_enqueue_script(
         "k1-$basename",
         $filename,
@@ -41,12 +44,15 @@ class App {
         !$isWDS
       );
     } else if ($isCSS) {
+      die("PLS2");
       wp_enqueue_style(
         "k1-$basename",
         $filename,
         $dependencies,
         $isWDS ? date('U') : null,
       );
+    } else {
+      // throw new \Exception("Unable to enqueue $assetName $filename as it's extension is unsupported");
     }
 
     // Return the handle for use in wp_localize_script
@@ -54,13 +60,22 @@ class App {
   }
 
   public function getAssetFilename(string $assetName, string $manifest) {
-    if (isset($this->manifests[$manifest]) && isset($this->manifests[$manifest][$name])) {
-      $filename = $this->manifests[$manifest][$name];
+    if (isset($this->manifests[$manifest]) && isset($this->manifests[$manifest][$assetName])) {
+      $filename = $this->manifests[$manifest][$assetName];
 
       return get_stylesheet_directory() . "/dist/$filename";
     }
 
     return false;
+  }
+
+  /**
+   * Get option from ACF options page
+   */
+  public function getOption($x, $languageSlug = null) {
+    $optionName = $this->i18n->getOptionName($x, $languageSlug);
+
+    return \get_field($optionName, 'options');
   }
 
   /**
@@ -73,8 +88,8 @@ class App {
       'templates' => [/* fill with file paths */],
       'languageSlugs' => ['en'],
       'manifests' => [
-        'client' => '../dist/client-manifest.json',
-        'admin' => '../dist/admin-manifest.json'
+        'client' => __DIR__ . '/../dist/client-manifest.json',
+        'admin' => __DIR__ . '/../dist/admin-manifest.json'
       ]
     ], $options);
 
@@ -93,11 +108,14 @@ class App {
     foreach ($options['blocks'] as $block) {
       require_once $block;
 
-      if (!class_exists($block)) {
+      $className = basename($block, '.php');
+      $Class = "\\k1\Blocks\\$className";
+
+      if (!class_exists($Class)) {
         throw new \Exception("Block $block is invalid");
       }
 
-      $instance = new $block(...$doge);
+      $instance = new $Class();
       $this->blocks[$instance->getName()] = $instance;
     }
   }

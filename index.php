@@ -9,10 +9,9 @@ get_header(); ?>
 
 <div class="container">
   <?php
-  $builder = \k1\Pagebuilder::instance();
-
-  echo $builder->block("PostList");
-  echo $builder->block("Pagination") ?>
+  while (have_posts()) { the_post();
+    the_content();
+  } ?>
 </div>
 
 <?php get_footer();
