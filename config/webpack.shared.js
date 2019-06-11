@@ -114,6 +114,13 @@ const devServerPlugin = (opts = {}) => {
         },
       ],
     },
+
+    // Replace react-dom with @hot-loader/react-dom
+    resolve: {
+      alias: {
+        'react-dom': '@hot-loader/react-dom'
+      }
+    }
   })
 }
 
