@@ -1,12 +1,14 @@
 module.exports = {
   parser: 'babel-eslint',
-  extends: 'standard',
+  extends: [
+    'standard',
+    'plugin:react/recommended'
+  ],
   rules: {
     'comma-dangle': ['error', 'always-multiline'],
     'indent': ['warn', 2],
     'linebreak-style': ['error', 'unix'],
     'quotes': ['error', 'single'],
-    'semi': ['error', 'always'],
     'no-unused-vars': ['warn'],
     'no-console': 0,
     'arrow-parens': ['error', 'always'],
@@ -20,7 +22,7 @@ module.exports = {
     'max-len': [1, { 'code': 110, 'ignoreComments': true }],
     'no-confusing-arrow': 0, // It isn't confusing. Hopefully.
     'react/jsx-filename-extension': 0,
-    'react/no-did-mount-set-state': 0,
+    'react/jsx-uses-vars': 1,
   },
   env: {
     browser: true,
@@ -34,6 +36,9 @@ module.exports = {
     }
   },
   settings: {
+    react: {
+      version: 'detect',
+    },
     // 'import/resolver': {
     //   webpack: {
     //     config: 'config/webpack.client.js',

@@ -1,4 +1,4 @@
-import 'regenerator-runtime'; // If you don't need async/await, comment this line to reduce bundle size
+import 'regenerator-runtime' // If you don't need async/await, comment this line to reduce bundle size
 import React from 'react'
 import ReactDOM from 'react-dom'
 
