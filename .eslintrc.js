@@ -34,10 +34,10 @@ module.exports = {
     }
   },
   settings: {
-    'import/resolver': {
-      webpack: {
-        config: 'config/webpack.client.js',
-      },
-    },
+    // 'import/resolver': {
+    //   webpack: {
+    //     config: 'config/webpack.client.js',
+    //   },
+    // },
   },
 };
