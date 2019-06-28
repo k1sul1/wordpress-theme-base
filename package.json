@@ -13,8 +13,10 @@
   ],
   "scripts": {
     "dev:client": "webpack-dev-server --env.NODE_ENV=development --config ./config/webpack.client.js",
+    "dev:client:noproxy": "webpack --watch --env.NODE_ENV=development --config ./config/webpack.client.js",
     "dev:admin": "webpack --watch --env.NODE_ENV=development --config ./config/webpack.admin.js",
-    "dev": "nodemon --watch ./config --watch ./config.json --exec \"npm-run-all --parallel dev:admin dev:client\"",
+    "dev": "nodemon --watch ./config --watch ./config.json --delay 2 --exec \"npm-run-all --parallel dev:client dev:admin\"",
+    "dev:noproxy": "nodemon --watch ./config --watch ./config.json --delay 2 --exec \"npm-run-all --parallel dev:admin dev:client:noproxy\"",
     "build:client": "webpack --env.NODE_ENV=production --config ./config/webpack.client.js",
     "build:admin": "webpack --env.NODE_ENV=production --config ./config/webpack.admin.js",
     "build": "npm-run-all gtfo --parallel build:admin build:client",

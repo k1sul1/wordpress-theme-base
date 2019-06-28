@@ -5,7 +5,7 @@
  */
 namespace k1\GenericFilters;
 
-function title_prefix($title) {
+function titlePrefix($title) {
   $dev = "D";
   $staging = "S";
   $production = "P";
@@ -41,28 +41,30 @@ function title_prefix($title) {
   return $title;
 }
 
-add_filter("the_seo_framework_pro_add_title", "\\k1\\GenericFilters\\title_prefix");
-add_filter("admin_title", "\\k1\\GenericFilters\\title_prefix");
-add_filter("wp_title", "\\k1\\GenericFilters\\title_prefix");
+add_filter("the_seo_framework_title_from_generation", "\\k1\\GenericFilters\\titlePrefix");
+add_filter("admin_title", "\\k1\\GenericFilters\\titlePrefix");
+add_filter("wp_title", "\\k1\\GenericFilters\\titlePrefix");
 
 /**
  * Strip empty paragraphs
  *
  * @param mixed $content
  */
-function strip_empty_paragraphs($content) {
+function stripEmptyParagraphs($content) {
   return str_replace("<p>&nbsp;</p>", "", $content);
 }
 
-add_filter("the_content", "\\k1\\GenericFilters\\strip_empty_paragraphs");
+add_filter("the_content", "\\k1\\GenericFilters\\stripEmptyParagraphs");
 
 // Disable "traffic lights"
 add_filter("the_seo_framework_show_seo_column", "__return_false");
 
-// Add %home% tag to bcn breadcrumbs
+/**
+ * Add %home% tag to Breadcrumb NavXT
+ */
 add_filter("bcn_template_tags", function ($replacements, $type, $id) {
-  // d(...func_get_args());
-  $replacements["%home%"] = gs("Breadcrumb: Home");
+  $app = \k1\app();
+  $replacements["%home%"] = $app->i18n->getText("Breadcrumb: Home");
 
   return $replacements;
 }, 3, 10);
@@ -73,7 +75,7 @@ add_filter("bcn_template_tags", function ($replacements, $type, $id) {
  * @param string $image The social image URL.
  * @param int    $id    The page or term ID.
 */
-function set_absolute_image_url($image, $id) {
+function setAbsoluteImageUrl($image, $id) {
   if (strpos($image, "http") === 0) {
     return esc_url($image);
   } else {
@@ -82,10 +84,10 @@ function set_absolute_image_url($image, $id) {
 }
 
 // OG image
-add_filter("the_seo_framework_ogimage_output", "\\k1\\GenericFilters\\set_absolute_image_url", 10, 2);
+add_filter("the_seo_framework_ogimage_output", "\\k1\\GenericFilters\\setAbsoluteImageUrl", 10, 2);
 
 // Twitter card image
-add_filter("the_seo_framework_twitterimage_output", "\\k1\\GenericFilters\\set_absolute_image_url", 10, 2);
+add_filter("the_seo_framework_twitterimage_output", "\\k1\\GenericFilters\\setAbsoluteImageUrl", 10, 2);
 
 
 /**
@@ -94,14 +96,14 @@ add_filter("the_seo_framework_twitterimage_output", "\\k1\\GenericFilters\\set_a
  * @link https://gist.github.com/965956
  * @link http://www.readability.com/publishers/guidelines#publisher
  */
-function embed_wrap($cache) {
+function embedWrap($cache) {
   return '<div class="responsive-embed">' . $cache . '</div>';
 }
 
-add_filter('embed_oembed_html', '\\k1\\GenericFilters\\embed_wrap');
+add_filter('embed_oembed_html', '\\k1\\GenericFilters\\embedWrap');
 
 add_action('after_setup_theme', function () {
-  remove_filter('embed_oembed_html', 'Roots\\Soil\\CleanUp\\embed_wrap');
+  remove_filter('embed_oembed_html', 'Roots\\Soil\\CleanUp\\embedWrap');
 }, 101);
 
 // Increase srcset max image width from default value of 1600

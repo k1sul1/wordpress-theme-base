@@ -24,15 +24,11 @@ class App {
   public function enqueue(string $assetName, string $manifest, $dependencies = []) {
     $isJS = strpos($assetName, '.js') !== false;
     $isCSS = !$isJS && strpos($assetName, '.css') !== false;
-    $isWDS = isWDS(); // To force cache disable and to run scripts in head in dev
+    // $isWDS = isWDS(); // To force cache disable and to run scripts in head in dev
     $filename = $this->getAssetFilename($assetName, $manifest);
 
     if (!$filename) {
       $message = "Unable to enqueue asset $assetName. It wasn't present in the $manifest manifest. ";
-
-      if ($isCSS) {
-        $message .= "Are you running webpack-dev-server and trying to access the non-proxied WordPress frontend? ";
-      }
 
       throw new \Exception($message);
     }
@@ -44,15 +40,15 @@ class App {
         "k1-$basename",
         $filename,
         $dependencies,
-        $isWDS ? date('U') : null,
-        !$isWDS
+        \k1\isDev() ? date('U') : null,
+        true
       );
     } else if ($isCSS) {
       wp_enqueue_style(
         "k1-$basename",
         $filename,
         $dependencies,
-        $isWDS ? date('U') : null,
+        \k1\isDev() ? date('U') : null,
       );
     } else {
       throw new \Exception("Unable to enqueue asset $assetName ($filename) due to type being unsupported");

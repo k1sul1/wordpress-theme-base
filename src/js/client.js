@@ -1,16 +1,34 @@
-import 'regenerator-runtime' // If you don't need async/await, comment this line to reduce bundle size
 import React from 'react'
 import ReactDOM from 'react-dom'
+
+import polyfiller from './lib/polyfiller'
+import mutate from './lib/wds-mutations'
 
 import '../styl/client.styl'
 
 /**
- * Don't want to use React? Just remove any React related imports, no need to remove
- * React from package.json. React won't be present in production bundle
- * if you haven't used it.
+ * Don't want to use React? Just remove any React related imports
+ * and do the config changes described in the README.
  */
-document.addEventListener('DOMContentLoaded', async () => {
-  const { default: App } = await import('./components/react-hot')
 
+polyfiller({
+  condition: window.Promise,
+  src: window.wptheme.corejs,
+}, () => polyfiller({ // If you're not using async/await, remove this call
+  condition: window.regeneratorRuntime,
+  src: window.wptheme.regeneratorRuntime,
+}, main))
+
+async function main () {
+  /**
+   * Fix *most* links and forms when running in WDS (:8080)
+   *
+   * Seemingly no effect when running in the correct origin.
+   */
+  if (module.hot) {
+    mutate({ replaceUrlWith: window.wptheme.wpurl })
+  }
+
+  const { default: App } = await import('./components/react-hot')
   ReactDOM.render(<App />, document.querySelector('.site-footer'))
-})
+}

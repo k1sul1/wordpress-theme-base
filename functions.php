@@ -34,17 +34,12 @@ $localizeData = [
 
 add_action('wp_enqueue_scripts', function() use ($app, $localizeData) {
   $jshandle = $app->enqueue('client.js', 'client');
+  $csshandle = $app->enqueue('client.css', 'client');
 
-  /**
-   * There's no CSS files when developing with webpack-dev-server. Styles are added to the DOM from the
-   * javascript file, which is why the file is included in head in development. Otherwise there's a
-   * styleflash.
-   */
-  if (!isWDS()) {
-    $csshandle = $app->enqueue('client.css', 'client');
-  }
-
-  wp_localize_script($jshandle, 'wptheme', $localizeData);
+  wp_localize_script($jshandle, 'wptheme', array_merge($localizeData, [
+    'corejs' => $app->getAssetFilename('corejs.js', 'client'),
+    'regeneratorRuntime' => $app->getAssetFilename('regeneratorRuntime.js', 'client'),
+  ]));
 });
 
 add_action('admin_enqueue_scripts', function() use ($app, $localizeData) {

@@ -1,160 +1,88 @@
 <?php
-/**
- * Functions related to media, useful in templates, but not necessary template tags.
- */
 namespace k1\Media;
 
-function svg($path, $args = []) {
-  $data = false;
-  $wrap = function ($x) use (&$classes) {
-    return "<div class='inline-svg $classes'>$x</div>";
+/**
+ * Get SVG from the theme dist folder
+ */
+function svg(string $filename, array $data = []) {
+  $data = \k1\params([
+    'wrapperClass' => '',
+  ], $data);
+  $wrapper = function($svgEl) use ($data) {
+    return "<div class='k1-svg $data[wrapperClass]'>$svgEl</div>";
   };
 
-  if (is_string($args)) {
-    // Used to take $classes as the second param, so this is for "legacy"
-    $classes = $args;
-  } else {
-    $classes = $args["class"] ?? "";
-  }
-
-  $classes .= " ";
-  if (strpos($path, "#") === 0) {
-    $template = parse_url(get_template_directory_uri());
-
-    $viewbox = apply_filters("k1sul1_svg_viewbox", "0 0 10 10", $path, "use");
-    // add_filter("k1sul1_svg_viewbox", function($viewbox, $path, $type), 10, 3);
-
-    $classes .= substr($path, 1);
-    $data = $wrap("
-    <svg class='use-tag' viewbox='$viewbox'>
-      <use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='$template[path]/dist/img/no-inline/svg/svgs.svg$path'>
-      </use>
-    </svg>
-    ");
-  } else if (file_exists($path)) {
-    $classes .= pathinfo($path)["filename"];
-    $data = $wrap(file_get_contents($path));
-  } else {
-    $classes .= pathinfo($path)["filename"];
-    $data = $wrap(file_get_contents(get_template_directory() . "/dist/img/svg/$path"));
-  }
-
-  return $data;
+  return $wrapper(file_get_contents(
+    \k1\app()->getAssetFilename('img/' . $filename, 'client', false)
+  ));
 }
 
 /**
- * Returns an image element.
- * Usage: <?=\k1\Media\image($image, 'your-size')?>
- *
- * @param mixed $image
- * @param string $size
- * @param array $args
- * @return string
+ * Get an image from WordPress. Caption and srcset support.
  */
-function image($image, $size = 'medium', $args = []) {
-  $args = \k1\Template\params([
+function image($image = null, array $data = []) {
+  $data = \k1\params([
+    'size' => 'medium',
+    'class' => 'k1-image',
     'responsive' => true,
-    'class' => null,
     'sizes' => null,
-  ], $args);
+    'allowCaption' => false,
+  ], $data);
 
-  $data = get_image_data($image, $size);
-
-  if (!$data) {
-    return false;
-  }
-
-  // If the title contains the filename, don't use a title.
-  $has_title = strpos($data['src'], $data['title']) > -1 ? false : true;
-  $class = $args['responsive'] ? 'k1sul1-image k1sul1-image--responsive' : 'k1sul1-image';
-  $class = $args['class'] ?: $class;
-  
-  return  \k1\tag([
-    "<img src='$data[src]'",
-    $args['responsive'] ? "srcset='$data[srcset]'" : "",
-    $args['sizes'] ? "sizes='$args[sizes]'" : "",
-    $has_title ? "title='$data[title]'" : "",
-    $class ? "class='$class'" : "",
-    "alt='$data[alt]'>"
-  ]);
-}
-
-/**
- * Returns an image element with captions.
- *
- * @param mixed $image
- * @param string $size
- * @param boolean $responsive
- */
-function captioned_image($image, $size, $responsive = true) {
-  $image = image($image, $size, $responsive);
+  $image = getImageData($image, $data['size']);
 
   if (!$image) {
     return false;
   }
 
-  $caption = get_image_data($image, $size)['caption'];
+  $tag = "<img src='$image[src]' class='$data[class]' alt='$image[alt]'";
 
-  return \k1\tag([
-    "<figure class='k1sul1-captioned'>",
-      $image,
-      "<figcaption class='k1sul1-captioned__caption'>",
-        $caption,
-      "</figcaption>",
-    "</figure>"
-  ]);
+  if ($data['responsive']) {
+      $tag .= " srcset='$image[srcset]' sizes='$data[sizes]'";
+  }
+
+  if ($image['title']) {
+      $tag .= " title='$image[title]'";
+  }
+
+  $tag .= '>';
+
+  if ($data['allowCaption'] && $image['caption']) {
+    return "
+      <figure class='k1-figure'>
+        $tag
+
+        <figcaption class='k1-figure__caption'>
+          $image[caption]
+        </figcaption>
+      </figure>
+    ";
+  }
+
+  return $tag;
 }
 
 /**
- * Return all relevant data for an image as an array.
- *
- * @param mixed $image
- * @param string $size
+ * Get image data from WordPress.
  */
-function get_image_data($image = null, $size = 'medium') {
+function getImageData($image = null, string $size = 'medium') {
   if (is_array($image)) {
     $id = $image['ID'];
   } else if (is_numeric($image)) {
     $id = absint($image);
-  } else if (!$image) {
-    return false;
   } else {
-    throw new \Exception('$image must be an array, falsy value, or numeric id.');
     return false;
   }
 
-  // Cache the call so we won't have to fetch the data again and again...
+  $x = get_post($id);
+  $data = [
+    'src' => wp_get_attachment_image_url($id, $size),
+    'srcset' => wp_get_attachment_image_srcset($id, $size),
+    'description' => \esc_html($x->post_content),
+    'title' => \esc_attr($x->post_title),
+    'alt' => get_post_meta($id, '_wp_attachment_image_alt', true),
+    'caption' => \esc_html($x->post_excerpt),
+  ];
 
-  $key = "k1sul1_gid_$id";
-  $isDev = defined("WP_DEBUG") ? WP_DEBUG : false;
-  if ($isDev) {
-    $transient = get_transient($key);
-  } else {
-    $transient = false;
-  }
-
-  if ($transient) {
-    return $transient;
-  } else {
-    $attachment = get_post($id);
-    $data = [
-      'src' => wp_get_attachment_image_url($id, $size),
-      'srcset' => wp_get_attachment_image_srcset($id, $size),
-      'alt' => get_post_meta($id, '_wp_attachment_image_alt', true),
-      'caption' => $attachment->post_excerpt,
-      'description' => $attachment->post_content,
-      'title' => $attachment->post_title
-    ];
-
-    set_transient(
-      $key,
-      $data,
-      apply_filters(
-        'k1sul1_get_image_data_transient',
-        MINUTE_IN_SECONDS
-      )
-    );
-
-    return $data;
-  }
+  return $data;
 }

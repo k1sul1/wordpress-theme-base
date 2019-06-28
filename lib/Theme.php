@@ -28,7 +28,7 @@ add_action("after_setup_theme", function () {
 });
 
 function configure_relevanssi($force = false) {
-  if ($force || !get_option("k1sul1_relevanssi_configured")) {
+  if ($force || !get_option("k1_relevanssi_configured")) {
     /* Legend
        *: Comma separated list of IDs.
     */
@@ -90,6 +90,6 @@ Score: %score%
       \update_option("relevanssi_$key", $value);
     }
 
-    \update_option("k1sul1_relevanssi_configured", time());
+    \update_option("k1_relevanssi_configured", time());
   }
 } configure_relevanssi();

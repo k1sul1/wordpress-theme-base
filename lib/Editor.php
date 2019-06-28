@@ -1,6 +1,6 @@
 <?php
 /**
- * Tweaks to the editor and edit page.
+ * Tweaks to the classic editor. Only usable inside ACF fields.
  */
 namespace k1\Editor;
 

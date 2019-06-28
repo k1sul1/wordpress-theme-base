@@ -10,7 +10,7 @@ namespace k1\Taxonomy;
  * @param string $taxonomy
  * @param mixed $post_id
  */
-function get_primary_term($taxonomy = 'category', $post_id = null) {
+function getPrimaryTerm($taxonomy = 'category', $post_id = null) {
   if (is_null($post_id)) {
     $post_id = get_the_ID();
 

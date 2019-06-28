@@ -7,24 +7,39 @@ const {
   cssExtractPlugin,
   assetLoaderPlugin,
   sourcemapPlugin,
-  jsTranspilePlugin,
 } = modules
 const { source } = paths
 
-const devConf = (env) => merge(devServerPlugin())
+const isDevServer = process.argv.find((v) => v.includes('webpack-dev-server'))
+
+const devConf = (env) => (isDevServer
+  ? merge(devServerPlugin(), cssExtractPlugin(env))
+  : merge(cssExtractPlugin(env))
+)
 const prodConf = (env) => merge(cssExtractPlugin(env))
 
-module.exports = ({ NODE_ENV: env }) => merge({
+module.exports = ({ NODE_ENV: env }) => merge(
+  {
     mode: env,
     target: 'web',
 
     entry: {
-      shittybrowsers: ['core-js/stable', 'regenerator-runtime'],
-      client: ['react-hot-loader/patch', path.join(source, 'js', 'client')]
+      corejs: ['core-js/stable'],
+      regeneratorRuntime: ['regenerator-runtime'],
+      client: ['react-hot-loader/patch', path.join(source, 'js', 'client')],
     },
 
     output: {
       filename: env === 'development' ? '[name].js' : '[name].[contenthash].js',
+    },
+
+    // Replace react-dom with @hot-loader/react-dom
+    resolve: {
+      alias: env === 'development'
+        ? {
+          'react-dom': '@hot-loader/react-dom',
+        }
+        : {},
     },
 
     node: {

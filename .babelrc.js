@@ -1,7 +1,7 @@
 module.exports = {
   "plugins": [
     // Stage 2; EcmaScript draft
-    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    // ["@babel/plugin-proposal-decorators", { "legacy": true }], // Decorators are cool, but looks like they're changing for the official implementation
     "@babel/plugin-proposal-function-sent",
     "@babel/plugin-proposal-numeric-separator",
     "@babel/plugin-proposal-throw-expressions",

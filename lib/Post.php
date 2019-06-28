@@ -12,7 +12,7 @@ namespace k1\Post;
  * @param mixed $post_id
  * @param boolean $fallback
  */
-function get_excerpt($post_id = null, $fallback = true) {
+function getExcerpt($post_id = null, $fallback = true) {
   if (is_null($post_id)) {
     $post_id = get_the_ID();
   }
@@ -22,7 +22,7 @@ function get_excerpt($post_id = null, $fallback = true) {
   } elseif (has_excerpt($post_id)) {
     return get_the_excerpt($post_id);
   } elseif ($fallback) {
-    return get_preview($post_id);
+    return getPreview($post_id);
   }
 
   return false;
@@ -33,7 +33,7 @@ function get_excerpt($post_id = null, $fallback = true) {
  *
  * @param mixed $post_id
  */
-function get_preview($post_id = null) {
+function getPreview($post_id = null) {
   if (is_null($post_id)) {
     $post_id = get_the_ID();
   }
@@ -46,13 +46,13 @@ function get_preview($post_id = null) {
 }
 
 /**
- * Return the excerpt as a template tag, using get_excerpt().
+ * Return the excerpt as a template tag, using getExcerpt().
  *
  * @param mixed $post_id
  * @param boolean $fallback
  */
 function excerpt($post_id = null, $fallback = true) {
-  $excerpt = get_excerpt($post_id, $fallback);
+  $excerpt = getExcerpt($post_id, $fallback);
 
   return \k1\tag([
     "<div class='k1sul1-excerpt'>",
@@ -64,14 +64,14 @@ function excerpt($post_id = null, $fallback = true) {
 }
 
 /**
- * Return a preview of the post as a template tag, using get_preview().
+ * Return a preview of the post as a template tag, using getPreview().
  *
  * @param int $word_count
  * @param string $more
  * @param mixed $post_id
  */
 function preview($word_count = 30, $more = "&hellip;", $post_id = null) {
-  $preview = get_preview($post_id);
+  $preview = getPreview($post_id);
 
   return \k1\tag([
     "<div class='k1sul1-preview'>",
@@ -85,7 +85,7 @@ function preview($word_count = 30, $more = "&hellip;", $post_id = null) {
  *
  * @param string $post_type
  */
-function archive_link($post_type = 'post') {
+function archiveLink($post_type = 'post') {
   if ($post_type === 'post') {
     return get_permalink(get_option('page_for_posts'));
   }

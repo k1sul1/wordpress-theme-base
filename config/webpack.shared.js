@@ -10,6 +10,27 @@ const HotModuleReplacement = require('webpack').HotModuleReplacementPlugin
 const MiniCSSExtract = require('mini-css-extract-plugin')
 
 const sourceMap = true
+let config = {}
+
+try {
+  config = require(path.join(__dirname, '..', 'config.json'))
+} catch (e) {
+  console.log(e)
+  console.log('')
+  console.log('')
+  console.log('The config file (config.json) appears to be missing, unable to run!')
+  console.log('')
+  console.log('')
+
+  // exiting with error status kills the cat; pretend everything is fine
+  process.exit(0)
+}
+
+const { webpack } = config
+const host = process.env.HOST || webpack.serverAddress || 'localhost'
+const port = process.env.PORT || 8080
+const isHTTPS = webpack.wordpressURL.includes('https')
+const publicPath = (isHTTPS ? 'https' : 'http') + `://${host}${webpack.publicPath}`
 
 const manifestPlugin = (opts = {}) => ({
   plugins: [
@@ -17,9 +38,10 @@ const manifestPlugin = (opts = {}) => ({
       fileName: 'client-manifest.json',
       publicPath: '', // Don't add anything extra, just the filename.
       writeToFileEmit: 'true',
+      seed: {},
       ...opts,
-    })
-  ]
+    }),
+  ],
 })
 
 const devServerPlugin = (opts = {}) => {
@@ -27,26 +49,8 @@ const devServerPlugin = (opts = {}) => {
   const isMac = /^darwin/.test(process.platform)
   // const isTheOneAndOnly = !isWin && !isMac
 
-  let config = {}
-  try {
-    config = require(path.join(__dirname, '..', 'config.json'))
-  } catch (e) {
-    console.log(e)
-    console.log('')
-    console.log('')
-    console.log(`The config file (config.json) appears to be missing, unable to run WDS!`)
-    console.log('')
-    console.log('')
-
-    // exiting with error status kills the cat; pretend everything is fine
-    process.exit(0)
-  }
-
-  const { webpack } = config
-  const host = process.env.HOST || webpack.serverAddress || 'localhost'
-  const port = process.env.PORT || 8080;
-  const isHTTPS = webpack.wordpressURL.includes('https')
-  const publicPath = isHTTPS ? 'https' : 'http' + `://${host}:${port}${webpack.publicPath}`
+  // Override publicPath
+  const publicPath = (isHTTPS ? 'https' : 'http') + `://${host}:${port}${webpack.publicPath}`
 
   return merge({
     devServer: {
@@ -65,7 +69,7 @@ const devServerPlugin = (opts = {}) => {
         aggregateTimeout: 300,
       },
 
-      open: process.env.OPEN === 'false' ? false : true,
+      open: process.env.OPEN !== 'false',
       hotOnly: true,
       clientLogLevel: 'none',
       publicPath,
@@ -78,9 +82,16 @@ const devServerPlugin = (opts = {}) => {
           secure: false,
           headers: {
             'X-Proxy': 'webpack-dev-server',
-          }
-        }
-      }
+          },
+        },
+      },
+
+      // Allow access to WDS data from anywhere, including the standard non-proxied WP
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+        'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+      },
     },
 
     plugins: [
@@ -91,36 +102,8 @@ const devServerPlugin = (opts = {}) => {
     ],
 
     output: {
-      publicPath,
+      publicPath, // Has to override any previous publicPaths, easiest way to ensure that to is to add this plugin last
     },
-
-    module: {
-      rules: [
-        {
-          test: /\.(styl|css)$/,
-          use: [
-            {
-              loader: 'style-loader',
-              options: {
-                sourceMap,
-                singleton: true,
-              }
-            },
-            { loader: 'css-loader', options: { sourceMap } },
-            { loader: 'postcss-loader', options: { sourceMap } },
-            { loader: 'resolve-url-loader', options: { sourceMap } },
-            { loader: 'stylus-loader', options: { sourceMap } }
-          ],
-        },
-      ],
-    },
-
-    // Replace react-dom with @hot-loader/react-dom
-    resolve: {
-      alias: {
-        'react-dom': '@hot-loader/react-dom'
-      }
-    }
   })
 }
 
@@ -158,25 +141,29 @@ const assetLoaderPlugin = (env) => ({
           options: {
             babelrc: true,
             cacheDirectory: true,
-          }
+          },
         },
       },
     ],
   },
 })
 
-// env will be useful in the future with next release of the plugin
 const cssExtractPlugin = (env) => ({
   module: {
     rules: [
       {
         test: /\.(css|styl)$/,
         use: [
-          { loader: MiniCSSExtract.loader },
+          {
+            loader: MiniCSSExtract.loader,
+            options: {
+              hmr: env === 'development',
+            },
+          },
           { loader: 'css-loader', options: { sourceMap } },
           { loader: 'postcss-loader', options: { sourceMap } },
           { loader: 'resolve-url-loader', options: { sourceMap } },
-          { loader: 'stylus-loader', options: { sourceMap } }
+          { loader: 'stylus-loader', options: { sourceMap, preferPathResolver: 'webpack' } },
         ],
       },
     ],
@@ -184,53 +171,68 @@ const cssExtractPlugin = (env) => ({
 
   plugins: [
     new MiniCSSExtract({
-      filename: env === 'production' ? '[name].[hash].css' : '[name].css',
+      filename: env !== 'development' ? '[name].[hash].css' : '[name].css',
     }),
   ],
 })
 
-const genericPlugins = (env) => ({
-  plugins: [
-    new Copy([
-      {
-        from: 'img',
-      }
-    ]),
-    new Imagemin({
-      disable: env !== 'production',
+const genericPlugins = (env) => {
+  let conf = {
+    output: {
+      publicPath,
+    },
 
-      optipng: {
-        // https://github.com/imagemin/imagemin-optipng
-        optimizationLevel: 3
-      },
+    plugins: [
+      new Copy([
+        {
+          from: 'src/img',
+          to: 'img/',
+        },
+      ]),
+      new Imagemin({
+        disable: env !== 'production',
 
-      gifsicle: {
-        // https://github.com/imagemin/imagemin-gifsicle
-        optimizationLevel: 2,
-      },
+        optipng: {
+          // https://github.com/imagemin/imagemin-optipng
+          optimizationLevel: 3,
+        },
 
-      jpegtran: {
-        // https://github.com/imagemin/imagemin-jpegtran
-        arithmetic: true,
-        progressive: true,
-      },
+        gifsicle: {
+          // https://github.com/imagemin/imagemin-gifsicle
+          optimizationLevel: 2,
+        },
 
-      svgo: {
-        plugins: [
-          { removeScriptElement: true },
-          { removeViewBox: false },
-          { removeDimensions: true },
-        ],
-      },
-    }),
+        jpegtran: {
+          // https://github.com/imagemin/imagemin-jpegtran
+          arithmetic: true,
+          progressive: true,
+        },
 
-    // env !== 'development' ? new Terser({ parallel: true }) : null,
-    // env !== 'development' ? new OptimizeCSSAssets() : null,
-  ]
-})
+        svgo: {
+          plugins: [
+            { removeScriptElement: true },
+            { removeViewBox: false },
+            { removeDimensions: true },
+          ],
+        },
+      }),
+    ],
+  }
+
+  if (env !== 'development') {
+    conf = merge(conf, {
+      plugins: [
+        new Terser({ parallel: true }),
+        new OptimizeCSSAssets(),
+      ],
+    })
+  }
+
+  return conf
+}
 
 const sourcemapPlugin = (env) => ({
-  devtool: env === 'development' ? 'cheap-module-source-map' : false
+  devtool: env === 'development' ? 'cheap-module-source-map' : false,
 })
 
 const modules = {
