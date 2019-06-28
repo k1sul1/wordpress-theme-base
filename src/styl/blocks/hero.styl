@@ -6,7 +6,8 @@
   flex-flow: row nowrap
 
   .k1-container {
-    width: auto
+    display: flex
+    flex-flow: row nowrap
   }
 
   .k1-bgmedia {
@@ -24,4 +25,4 @@
   }
 }
 
-generatePositions('.k1-hero', 'flex')
+generatePositions('.k1-hero .k1-container', 'flex')
