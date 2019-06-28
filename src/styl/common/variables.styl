@@ -1,0 +1,32 @@
+schemes = json('../../schemes.json', { hash: true })
+bp = json('../../breakpoints.json', { hash: true })
+
+font = {
+  primary: "'Source Sans Pro', sans-serif",
+  secondary: "Montserrat, serif",
+}
+
+// Short for font-size
+fs = {
+  h1: r(50px),
+  h2: r(40px),
+  h3: r(35px),
+  h4: r(30px),
+  h5: r(25px),
+  h6: r(20px),
+  p: r(18px),
+
+  // add more as necessary
+}
+
+// Short for whitespace, use for paddings and margins
+ws = {
+  sectionTop: r(50px)
+  sectionBottom: r(75px)
+
+  elementTop: r(20px)
+  elementBottom: r(20px)
+
+  containerLeft: r(20px)
+  containerRight: r(20px)
+}

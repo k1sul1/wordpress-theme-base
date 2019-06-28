@@ -6,37 +6,25 @@
 
 namespace k1\ACF;
 
-// $colorsJSON = json_decode(
-//   file_get_contents(get_template_directory() . "/src/colors.json")
-// );
-// $sharedColors = array_keys((array) $colorsJSON);
+if (is_admin()) {
+  $templateDir = get_template_directory();
+  $schemes = json_decode(file_get_contents($templateDir . "/src/schemes.json"));
+  $schemes = array_keys((array) $schemes); // Only keys are needed
 
-// $colors = [];
-// foreach ($sharedColors as $color) {
-//   $colors[$color] = ucfirst(str_replace("-", " ", $color));
-// }
+  $options = [];
+  foreach ($schemes as $key) {
+    $options[$key] = ucfirst(str_replace("-", " ", $key));
+  }
 
-// // Populate color field with values from shared-variables.json
-// add_filter("acf/load_field/key=field_5a39209c450d6", function ($field) use ($colors) {
-//   $field["instructions"] = ""; // Remove the default message
-//   $field["sub_fields"][0]["choices"] = $colors;
-//   $field["sub_fields"][0]["default_value"] = "gray";
+  $populator = function($field) use ($options) {
+    $field['choices'] = $options;
 
-//   return $field;
-// }, 10);
+    return $field;
+  };
 
-
-// // We rarely want all colors to be available as button colors, filter some out
-// add_filter("acf/load_field/key=field_5a3a18ca12b32", function ($field) use ($colors) {
-//   // If you add a field before color, this'll break
-
-//   $field["sub_fields"][2]["sub_fields"][0]["choices"] = array_diff(
-//     $colors,
-//     [
-//       "black" => "Black",
-//     ]
-//   );
-//   $field["sub_fields"][2]["sub_fields"][0]["default_value"] = "purple";
-
-//   return $field;
-// }, 11);
+  add_filter('acf/load_field/key=field_5d1636cfee8cf', $populator);
+  add_filter('acf/load_field/key=field_5d163631ee8cd', $populator);
+  add_filter('acf/load_field/key=field_5d163687ee8ce', $populator);
+  add_filter('acf/load_field/key=field_5d163783ee8d1', $populator);
+  add_filter('acf/load_field/key=field_5d16379aee8d2', $populator);
+}

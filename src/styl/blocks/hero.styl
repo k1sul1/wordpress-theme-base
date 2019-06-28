@@ -1,0 +1,27 @@
+.k1-hero {
+  position: relative
+  overflow: hidden
+  min-height: 50vh
+  display: flex
+  flex-flow: row nowrap
+
+  .k1-container {
+    width: auto
+  }
+
+  .k1-bgmedia {
+    position: absolute
+    top: 0
+    right: 0
+    left: 0
+    bottom: 0
+    z-index: 1
+  }
+
+  &__content {
+    position: relative
+    z-index: 2
+  }
+}
+
+generatePositions('.k1-hero', 'flex')

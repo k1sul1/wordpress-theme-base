@@ -11,7 +11,7 @@ use \k1\Options; ?>
 
   </main>
   <footer class="site-footer">
-    <div class="container">
+    <div class="k1-container">
       <p class="copyright"><?=$app->getOption("copyright_text")?></p>
     </div>
   </footer>

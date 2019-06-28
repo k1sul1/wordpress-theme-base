@@ -1,0 +1,53 @@
+{
+    "key": "group_5d1634ef9919d",
+    "title": "[FIELDSET] Position",
+    "fields": [
+        {
+            "key": "field_5d1655410669e",
+            "label": "Position",
+            "name": "position",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "leftTop": "Left top",
+                "centerTop": "Center top",
+                "rightTop": "Right top",
+                "leftCenter": "Left center",
+                "centerCenter": "Center center",
+                "rightCenter": "Right center",
+                "leftBottom": "Left bottom",
+                "centerBottom": "Center bottom",
+                "rightBottom": "Right bottom"
+            },
+            "allow_null": 0,
+            "default_value": "centerCenter",
+            "layout": "horizontal",
+            "return_format": "value"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 0,
+    "description": "",
+    "modified": 1561744967
+}

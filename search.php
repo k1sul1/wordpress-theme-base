@@ -6,8 +6,8 @@ namespace k1;
 
 get_header(); ?>
 
-<div class="k1-root--search-page">
-  <div class="k1-search-container container">
+<div class="k1-root k1-root--search-page">
+  <div class="k1-search-container k1-container">
     <form class="k1-search-form" action="/">
       <input type="search" name="s" placeholder="Search from site">
       <button type="submit">Search</button>
@@ -18,7 +18,7 @@ get_header(); ?>
     </h1>
   </div>
 
-  <div class="container">
+  <div class="k1-container">
     <?=Templates\PostList()?>
   </div>
 </div>

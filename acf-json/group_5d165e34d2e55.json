@@ -1,0 +1,46 @@
+{
+    "key": "group_5d165e34d2e55",
+    "title": "[FIELDSET] Background size",
+    "fields": [
+        {
+            "key": "field_5d165e4c4e0e0",
+            "label": "Background size",
+            "name": "backgroundSize",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "cover": "Cover",
+                "contain": "Contain"
+            },
+            "allow_null": 0,
+            "default_value": "",
+            "layout": "horizontal",
+            "return_format": "value"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 0,
+    "description": "",
+    "modified": 1561747096
+}

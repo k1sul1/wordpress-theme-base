@@ -6,10 +6,12 @@ namespace k1\Media;
  */
 function svg(string $filename, array $data = []) {
   $data = \k1\params([
-    'wrapperClass' => '',
+    'className' => ['k1-svg'],
   ], $data);
   $wrapper = function($svgEl) use ($data) {
-    return "<div class='k1-svg $data[wrapperClass]'>$svgEl</div>";
+    $class = \k1\className(...$data['className']);
+
+    return "<div $class>$svgEl</div>";
   };
 
   return $wrapper(file_get_contents(
@@ -23,19 +25,20 @@ function svg(string $filename, array $data = []) {
 function image($image = null, array $data = []) {
   $data = \k1\params([
     'size' => 'medium',
-    'class' => 'k1-image',
+    'className' => ['k1-image'],
     'responsive' => true,
     'sizes' => null,
     'allowCaption' => false,
   ], $data);
 
   $image = getImageData($image, $data['size']);
+  $class = \k1\className(...$data['className']);
 
   if (!$image) {
     return false;
   }
 
-  $tag = "<img src='$image[src]' class='$data[class]' alt='$image[alt]'";
+  $tag = "<img src='$image[src]' $class alt='$image[alt]'";
 
   if ($data['responsive']) {
       $tag .= " srcset='$image[srcset]' sizes='$data[sizes]'";

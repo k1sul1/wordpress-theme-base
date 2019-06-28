@@ -1,0 +1,22 @@
+.k1-wcolumns {
+  .k1-container {
+    display: flex
+    flex-flow: row wrap
+    justify-content: center
+    align-items: space-between
+  }
+
+  &__column {
+    ^[0]--count-2 & {
+      flex-basis: 50%
+    }
+
+    ^[0]--count-3 & {
+      flex-basis: 33%
+    }
+
+    ^[0]--count-4 & {
+      flex-basis: 25%
+    }
+  }
+}

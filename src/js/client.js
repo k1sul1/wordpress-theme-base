@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import polyfiller from './lib/polyfiller'
 import mutate from './lib/wds-mutations'
 
+import 'normalize.css'
 import '../styl/client.styl'
 
 /**

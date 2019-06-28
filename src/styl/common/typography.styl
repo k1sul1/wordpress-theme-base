@@ -1,0 +1,82 @@
+/**
+  * Set rem baseline. By increasing or decreasing the value,
+  * the site can scale perfectly. Users with bad vision might've set a minimum font size
+  * which is larger than this, and the site will appear larger to them.
+  *
+  * Use the r() mixin in all* px dimensions.
+ */
+html {
+  font-size: 16px
+  font-family: font.primary
+  line-height: 1.4
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: font.secondary
+  line-height: 1.2
+  color: inherit
+  margin: 0
+  margin-top: ws.elementTop
+  margin-bottom: ws.elementBottom
+}
+
+h1 {
+  font-size: fs.h1
+
+  +forTabletAndDown() {
+    font-size: r(40px)
+  }
+}
+
+h2 {
+  font-size: fs.h2
+
+  +forTabletAndDown() {
+    font-size: r(36px)
+  }
+}
+
+h3 {
+  font-size: fs.h3
+
+  +forTabletAndDown() {
+    font-size: r(30px)
+  }
+}
+
+h4 {
+  font-size: fs.h4
+
+  +forTabletAndDown() {
+    font-size: r(28px)
+  }
+}
+
+h5 {
+  font-size: fs.h5
+}
+
+h6 {
+  font-size: fs.h6
+}
+
+p {
+  font-family: font.primary
+  margin: 0
+  margin-top: ws.elementTop
+  margin-bottom: ws.elementBottom
+}
+
+ul, ol {
+  margin: 0
+  margin-top: ws.elementTop
+  margin-bottom: ws.elementBottom
+
+  li {
+
+  }
+}
+
+a {
+  text-decoration: none
+}

@@ -6,7 +6,7 @@ I've shipped dozens of custom made WordPress sites and made a few of these start
 
 See also: [k1sul1/docker-wordpress-spa-template](https://github.com/k1sul1/docker-wordpress-cra-spa-template) for a local / production Docker environment with Let's Encrypt. It's built for single page applications but can be dumbed down by removing irrelevant services and configuration pieces.
 
-WIP, some of the old source still exists, but tooling has been upgraded and everything should be functional.
+Work in progress, forever.
 
 ## Features
 
@@ -53,6 +53,7 @@ Hopefully just enough for you to build the next best WordPress site, without get
 
 
 ## Install
+Just dropping the folder works, but Composer is preferred.
 
 ```
 composer require k1sul1/wordpress-theme-base
@@ -89,12 +90,6 @@ WDS makes your life a lot easier, especially now that it can run in the backgrou
 Previously, it had a few drawbacks / limitations / annoyances. Because it's a proxy server, it runs in a different origin, and that might cause CORS problems. These problems could be dealt with programmatically, but it was not unusual to see form submissions failing, etc.
 
 It's perfectly fine to use this theme without using WDS, simply run `npm run dev:noproxy` instead of `npm run dev`.
-
-Please note that overcoming the limitations requires opening gaping security holes, and that is done only when `WP_ENV === 'development'`, so make sure to define it in your wp-config.php, if you don't have it already.
-
-**DO NOT** set WP_ENV to `development` on a server accessible from the internet!
-
-
 
 ### I want to create Gutenberg blocks but I don't want to use ACF Blocks
 Good luck. It's possible, but something that I'm not interested in supporting.
@@ -138,7 +133,7 @@ Then just add a new field group, like you normally would. Just select your block
 ### How does HMR work?
 With black magic. Once you understand that, it's pretty simple. CSS is stateless and easy to replace, but JavaScript is trickier. You explicitly have to declare something as hot reloadable, but this can be done with abstractions, such as react-hot-loader.
 
-To add HMR support to your own JS is "easy", simply add
+Adding HMR support to your own JS is "easy", simply add
 ```
 if (module.hot) {
   module.hot.accept('./path/to/file.js', (x) => {
@@ -147,3 +142,8 @@ if (module.hot) {
 }
 ```
 to the relevant location.
+
+### New .styl files aren't built without restarting the build or modifying the file which imports the offending file
+I'm pretty sure this issue is in stylus-loader, there's not much I can do about it. It's only imports with globs (*) that cause this issue.
+
+Best not to use glob, until this issue is fixed, which is probably never. [Unhelpful thread about the issue](https://github.com/shama/stylus-loader/issues/66).

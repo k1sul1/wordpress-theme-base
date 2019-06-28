@@ -22,7 +22,7 @@ use \k1\Templates as T;
     !$is_anon_user ? 'user-logged-in' : 'user-not-logged-in',
   ]);?>>
 
-  <a class="skip-link screen-reader-text" href="#content">
+  <a class="skip-link sr-text" href="#content">
     Skip to content
   </a>
 

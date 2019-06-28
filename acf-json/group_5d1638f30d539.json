@@ -1,11 +1,11 @@
 {
-    "key": "group_59d247a794a25",
-    "title": "Options [EN]",
+    "key": "group_5d1638f30d539",
+    "title": "[FIELDSET] Block settings",
     "fields": [
         {
-            "key": "field_59d24792f1887",
-            "label": "EN",
-            "name": "en",
+            "key": "field_5d1638fd8f18a",
+            "label": "Block settings",
+            "name": "blockSettings",
             "type": "clone",
             "instructions": "",
             "required": 0,
@@ -16,20 +16,21 @@
                 "id": ""
             },
             "clone": [
-                "group_59d246c91ec65"
+                "group_5d163604f3057",
+                "group_5d1638420b759"
             ],
             "display": "seamless",
             "layout": "block",
             "prefix_label": 0,
-            "prefix_name": 1
+            "prefix_name": 0
         }
     ],
     "location": [
         [
             {
-                "param": "options_page",
+                "param": "post_type",
                 "operator": "==",
-                "value": "acf-options"
+                "value": "post"
             }
         ]
     ],
@@ -39,7 +40,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": 0,
     "description": "",
-    "modified": 1560202391
+    "modified": 1561737531
 }
