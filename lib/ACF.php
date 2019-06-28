@@ -11,7 +11,7 @@ if (is_admin()) {
   $schemes = json_decode(file_get_contents($templateDir . "/src/schemes.json"));
   $schemes = array_keys((array) $schemes); // Only keys are needed
 
-  $options = [];
+  $options = ['choose' => 'Choose'];
   foreach ($schemes as $key) {
     $options[$key] = ucfirst(str_replace("-", " ", $key));
   }

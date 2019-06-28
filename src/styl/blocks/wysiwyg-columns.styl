@@ -1,12 +1,17 @@
 .k1-wcolumns {
+  padding-top: ws.sectionTop
+  padding-bottom: ws.sectionBottom
+
   .k1-container {
     display: flex
-    flex-flow: row wrap
-    justify-content: center
-    align-items: center
+    flex-flow: row nowrap
+    justify-content: space-between
   }
 
   &__column {
+    flex: 1 1 auto
+    padding: 0 r(10px)
+
     ^[0]--count-2 & {
       flex-basis: 50%
     }

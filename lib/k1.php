@@ -147,3 +147,12 @@ function wrapper($wrappable, $options = []) {
 
   return "<$tag class='$class'>$wrappable</$tag>";
 }
+
+/**
+ * Capture function *output*. Useful when you need to have a template inside a variable.
+ */
+function capture($fn, ...$params) {
+  \ob_start();
+  $fn(...$params);
+  return \ob_get_clean();
+}

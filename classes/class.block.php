@@ -43,7 +43,7 @@ abstract class Block {
       'title' => $this->getName(),
       'name' => strtolower($this->getName()),
       'render_callback' => [$this, 'render'],
-      'mode' => 'edit',
+      'mode' => 'auto',
       'category' => 'layout',
       'supports' => [
         'align' => false,
@@ -57,21 +57,6 @@ abstract class Block {
    * Output the block
    */
   public function print(...$params) {
-    // $name = $this->getName();
-    // $function = "\\k1\\Blocks\\$name";
-    echo $this->render(...$params);
-
-    // echo $function(...$params);
-  }
-
-  /**
-   * Print the template and capture the output.
-   * Use cases include saving the result into a variable.
-   */
-  public function capture(...$params) {
-    \ob_start();
-    $this->print(...$params);
-
-    return \ob_get_clean();
+    $this->render(...$params);
   }
 }

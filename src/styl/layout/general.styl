@@ -6,14 +6,25 @@ html {
   box-sizing: inherit
 }
 
+img {
+  max-width: 100%
+  height: auto
+}
+
+.wp-caption {
+  width: auto !important // Why does WP put inline styles?
+}
+
 .k1-root {
 
 }
 
 .k1-container {
   width: 100%
+  max-width: 100%
   padding-left: ws.containerLeft
   padding-right: ws.containerRight
+  overflow: hidden
 
   +forDesktop() {
     max-width: 1366px;

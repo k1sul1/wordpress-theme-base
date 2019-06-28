@@ -16,6 +16,7 @@ function getScheme($acfGroupField = []) {
 
   $advanced = $data['advancedMode'];
   $scheme = [
+    "k1-scheme",
     "k1-scheme--base-$data[base]",
   ];
 
@@ -24,7 +25,7 @@ function getScheme($acfGroupField = []) {
 
   if ($advanced) {
     foreach ($data as $k => $v) {
-      if ($v !== 'default') {
+      if ($v !== 'choose') {
         $scheme[] = "k1-scheme--$k-$v";
       }
     }

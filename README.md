@@ -15,13 +15,13 @@ Hopefully just enough for you to build the next best WordPress site, without get
 ### The real deal
 - Custom Gutenberg block support
  - With a few generic blocks
-- Multilinguality support
+- Multilinguality support*
   - including, but not limited to: ACF options pages & theme strings
 - Automagical asset manifests, ensures that visitors always see the latest assets
 - Reusable & combinable data-driven templates
 - Theme image optimization (Imagemin)
 - Sourcemaps to help you locate troublemakers in CSS & JS
-- Integrates with [k1 kit](https://github.com/k1sul1/k1kit)
+- Integrates with [k1 kit](https://github.com/k1sul1/k1kit)*
 
 ### Nice to haves
 - Hot module reloading (HMR) for CSS & _compatible_ JS
@@ -33,6 +33,8 @@ Hopefully just enough for you to build the next best WordPress site, without get
   - Flexbugs fixer
 - `<title>` is prefixed with the current environment to avoid confusion when working with multiple instances
 - Namespaces
+
+*: Not tested in an actual production project / not ready for the world yet.
 
 ## Requirements
 
