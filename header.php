@@ -32,6 +32,3 @@ use \k1\Templates as T;
   </header>
 
   <main id="content">
-
-
-  <?=T\OpenSection(['width' => '100', 'align' => 'center'])?>

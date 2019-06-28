@@ -4,4 +4,4 @@ module.exports = {
     require('postcss-flexbugs-fixes'),
   ],
   sourceMap: true,
-};
+}

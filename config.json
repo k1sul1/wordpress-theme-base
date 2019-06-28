@@ -1,7 +1,7 @@
 {
   "webpack": {
-    "publicPath": "/wp-content/themes/wordpress-theme-base/dist",
-    "serverAddress": "wordpress.local",
-    "wordpressURL": "http://wordpress.local"
+    "publicPath": "/wp-content/themes/wordpress-theme-base/dist/",
+    "serverAddress": "wp.kisu.local",
+    "wordpressURL": "https://wp.kisu.local"
   }
 }

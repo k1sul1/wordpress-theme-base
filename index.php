@@ -7,7 +7,7 @@ namespace k1;
 
 get_header(); ?>
 
-<div class="container">
+<div class="k1-root--index">
   <?php
   while (have_posts()) { the_post();
     the_content();
