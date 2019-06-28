@@ -12,3 +12,12 @@
     background-size: cover
   }
 }
+
+
+.k1-bp {
+  for point in bp {
+    &--hide-{point} {
+      hideForBP(point)
+    }
+  }
+}
