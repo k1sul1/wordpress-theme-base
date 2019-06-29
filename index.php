@@ -16,7 +16,7 @@ get_header(); ?>
 
 <div class="k1-root k1-root--archive">
   <?php
-  $hero->render([
+  echo withTransient(capture([$hero, 'render'], [
     'blockSettings' => [ // cloned field
       'scheme' => [
         'base' => 'invert',
@@ -36,7 +36,14 @@ get_header(); ?>
         ]
       ]
     ]
-  ]);
+  ]), [
+    'key' => 'indexHero',
+    'options' => [
+      'type' => 'manual-block',
+    ]
+  ], $missReason);
+
+  echo "\n\n\n<!-- Block " . $hero->getName() . " cache: " . transientResult($missReason) . " -->";
 
   Templates\PostList(); ?>
 </div>

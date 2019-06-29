@@ -36,8 +36,7 @@ function isDev() {
 }
 
 /**
- * Return the current, full URL.
- * 21 years of PHP and still no function on server variable capable of doing this.
+ * Return the current, full URL, excluding URL parameters.
  *
  * @return string
  */
@@ -115,7 +114,7 @@ function params($defaults = [], $provided = []) {
  */
 function className() {
   $args = func_get_args();
-  $classes = PHP_EOL . join(PHP_EOL, $args);
+  $classes = \esc_attr(PHP_EOL . join(PHP_EOL, $args));
 
   return "class=\"$classes\"";
 }
@@ -125,7 +124,7 @@ function title($title = null) {
     $title = get_the_title();
   }
 
-  return apply_filters("the_title", $title);
+  return \esc_html(apply_filters("the_title", $title));
 }
 
 function content($content = null) {
@@ -133,7 +132,7 @@ function content($content = null) {
     $content = get_the_content();
   }
 
-  return apply_filters("the_content", $content);
+  return \esc_html(apply_filters("the_content", $content));
 }
 
 function wrapper($wrappable, $options = []) {
@@ -155,4 +154,38 @@ function capture($fn, ...$params) {
   \ob_start();
   $fn(...$params);
   return \ob_get_clean();
+}
+
+function withTransient($data, $opts = [], &$missReason = null) {
+  if (!class_exists('\k1\Transientify')) {
+    return $data;
+  }
+
+  $options = params([
+    'key' => null,
+    'options' => [
+      'expires' => \HOUR_IN_SECONDS,
+      'type' => 'general',
+      'bypassPermissions' => ['edit_posts'],
+    ]
+  ], $opts);
+
+  if (!$options['key']) {
+    throw new \Exception('Unable to create transient without key');
+  }
+
+  $transient = new Transientify($options['key'], $options['options']);
+  $missReason = null;
+
+  return $transient->get(function($transientify) use (&$data) {
+    return $transientify->set($data);
+  }, $missReason);
+}
+
+function transientResult($missReason = null) {
+  if (\is_null($reason)) {
+    return 'Hit';
+  }
+
+  return $missReason;
 }

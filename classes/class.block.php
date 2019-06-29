@@ -93,7 +93,7 @@ abstract class Block {
         return $transientify->set($html);
       }, $missReason);
 
-      echo "\n\n\n<!-- Block " . $this->getName() . " cache: " . ($missReason ?? "Hit") . " -->";
+      echo "\n\n\n<!-- Block " . $this->getName() . " cache: " . transientResult($missReason) . " -->";
     } else {
       $this->render($fields, $isPreview, $postId);
     }

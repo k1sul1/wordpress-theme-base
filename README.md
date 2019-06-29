@@ -72,7 +72,7 @@ To create a production build, run `npm run build`.
 In webpack-dev-server, CSS should update automatically without reloading, as should any module.hot compatible code. React should work out of the box. Due to recent ~~technological advancements~~ configuration changes,
 it's now possible to run WDS "in the background". Previously you've had to open `http://yoursite.local:8080` and develop in that, but that shouldn't be necessary any more. If it doesn't work, try :8080 and submit an issue.
 
-## Help
+## Help section
 ### I don't want to use React
 That's ok. Removing React from the bundles is easy with minor configuration modifications.
 
@@ -86,17 +86,12 @@ In addition to that, you have to edit `config/webpack.client.js`, and change `cl
 
 Now React won't be present.
 
-### webpack-dev-server
+### On webpack-dev-server
 WDS makes your life a lot easier, especially now that it can run in the background.
 
 Previously, it had a few drawbacks / limitations / annoyances. Because it's a proxy server, it runs in a different origin, and that might cause CORS problems. These problems could be dealt with programmatically, but it was not unusual to see form submissions failing, etc.
 
 It's perfectly fine to use this theme without using WDS, simply run `npm run dev:noproxy` instead of `npm run dev`.
-
-### I want to create Gutenberg blocks but I don't want to use ACF Blocks
-Good luck. It's possible, but something that I'm not interested in supporting.
-
-Create a new entry to `config/webpack.client.js` and start coding.
 
 ### Block creation
 
@@ -131,6 +126,48 @@ class Example extends \k1\Block {
 Then just add a new field group, like you normally would. Just select your block as the location.
 
 ![sample](docs/block-fields.png)
+
+### Can I call the custom blocks manually?
+Yes. The template files already do so. This example showcases how you can also cache those manually called blocks.
+
+```php
+<?php
+namespace k1;
+
+$app = app();
+$hero = $app->getBlock('Hero');
+
+echo withTransient(capture([$hero, 'render'], [
+  'content' => [
+    'data' => '<h1>' . title($title) . '</h1>',
+    'position' => 'centerBottom',
+  ],
+  'background' => [
+    'backgroundMedia' => [
+      'type' => 'image',
+      'image' => [
+        'data' => $thumb,
+        'imagePosition' => 'centerCenter'
+      ]
+    ]
+  ]
+]), [
+  'key' => 'indexHero',
+  'options' => [
+    'type' => 'manual-block',
+    'expiry' => \HOUR_IN_SECONDS,
+  ]
+], $missReason);
+
+echo "\n\n\n<!-- Block " . $hero->getName() . " cache: " . transientResult($missReason) . " -->";
+```
+
+When calling manually, you have to make sure that you use the same datastructure as ACF.
+
+### I want to create Gutenberg blocks but I don't want to use ACF Blocks
+Good luck. It's possible, but something that I'm not interested in supporting.
+
+Create a new entry to `config/webpack.client.js` and start coding.
 
 ### How does HMR work?
 With black magic. Once you understand that, it's pretty simple. CSS is stateless and easy to replace, but JavaScript is trickier. You explicitly have to declare something as hot reloadable, but this can be done with abstractions, such as react-hot-loader.
