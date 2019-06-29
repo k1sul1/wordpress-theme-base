@@ -2,11 +2,21 @@
 namespace k1\Blocks;
 
 class WysiwygColumns extends \k1\Block {
-  public function render() {
-    $data = [
-      'blockSettings' => get_field('blockSettings'), // [],
-      'columns' => get_field('columns'), // [],
-    ];
+  public function render($fields) {
+    $data = \k1\params([
+      'blockSettings' => [ // cloned field
+        'scheme' => [
+          'base' => 'default',
+          'advancedMode' => false,
+        ],
+        'breakpoints' => [
+          'hideIn' => [],
+        ]
+      ],
+      'columns' => [
+
+      ],
+    ], $fields);
 
     $classes = array_merge(
       [

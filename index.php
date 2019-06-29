@@ -5,13 +5,40 @@
  */
 namespace k1;
 
+$obj = \get_queried_object();
+$thumb = \get_post_thumbnail_id($obj->ID);
+$title = \is_archive() ? get_the_archive_title() : $obj->post_title;
+
+$app = app();
+$hero = $app->getBlock('Hero');
+
 get_header(); ?>
 
 <div class="k1-root k1-root--archive">
   <?php
-  while (have_posts()) { the_post();
-    the_content();
-  } ?>
+  $hero->render([
+    'blockSettings' => [ // cloned field
+      'scheme' => [
+        'base' => 'invert',
+        'advancedMode' => false,
+      ],
+    ],
+    'content' => [
+      'data' => '<h1>' . title($title) . '</h1>',
+      'position' => 'centerBottom',
+    ],
+    'background' => [
+      'backgroundMedia' => [
+        'type' => 'image',
+        'image' => [
+          'data' => $thumb,
+          'imagePosition' => 'centerCenter'
+        ]
+      ]
+    ]
+  ]);
+
+  Templates\PostList(); ?>
 </div>
 
 <?php get_footer();

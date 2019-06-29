@@ -2,12 +2,25 @@
 namespace k1\Blocks;
 
 class Hero extends \k1\Block {
-  public function render() {
-    $data = [
-      'blockSettings' => get_field('blockSettings'),
-      'background' => get_field('background'),
-      'content' => get_field('content'),
-    ];
+  public function render($fields) {
+    $data = \k1\params([
+      'blockSettings' => [ // cloned field
+        'scheme' => [
+          'base' => 'default',
+          'advancedMode' => false,
+        ],
+        'breakpoints' => [
+          'hideIn' => [],
+        ]
+      ],
+      'background' => [
+        'backgroundMedia' => [], // cloned field
+      ],
+      'content' => [
+        'data' => '',
+        'position' => 'leftCenter',
+      ],
+    ], $fields);
 
     $classes = array_merge(
       [

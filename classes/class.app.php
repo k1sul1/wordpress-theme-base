@@ -24,7 +24,6 @@ class App {
   public function enqueue(string $assetName, string $manifest, $dependencies = []) {
     $isJS = strpos($assetName, '.js') !== false;
     $isCSS = !$isJS && strpos($assetName, '.css') !== false;
-    // $isWDS = isWDS(); // To force cache disable and to run scripts in head in dev
     $filename = $this->getAssetFilename($assetName, $manifest);
 
     if (!$filename) {
@@ -75,6 +74,10 @@ class App {
     $optionName = $this->i18n->getOptionName($x, $languageSlug);
 
     return \get_field($optionName, 'options');
+  }
+
+  public function getBlock($name) {
+    return $this->blocks[$name];
   }
 
   /**
