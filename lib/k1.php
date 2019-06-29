@@ -132,7 +132,7 @@ function content($content = null) {
     $content = get_the_content();
   }
 
-  return \esc_html(apply_filters("the_content", $content));
+  return apply_filters("the_content", $content);
 }
 
 function wrapper($wrappable, $options = []) {

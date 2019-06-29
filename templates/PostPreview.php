@@ -6,7 +6,7 @@ namespace k1\Templates;
  */
 function PostPreview($data = []) {
   $data = \k1\params([
-    'title' => \get_the_title(),
+    'title' => \k1\title(),
     'date' => \get_post_type() === 'post' ? \get_the_date('d.m.Y') : null,
     'content' => \k1\Post\getPreview(),
     'link' => \get_permalink(),
