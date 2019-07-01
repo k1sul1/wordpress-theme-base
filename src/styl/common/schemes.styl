@@ -13,6 +13,18 @@ for key in schemes {
     a {
       color: schemes[key].links
     }
+
+    .active,
+    .open,
+    .current {
+      a {
+        if (dark(schemes[key].links)) {
+          color: lighten(schemes[key].links, 20%)
+        } else {
+          color: darken(schemes[key].links, 20%)
+        }
+      }
+    }
   }
 
 
@@ -36,6 +48,18 @@ for key in schemes {
     &.k1-scheme--links-{key} {
       a {
         color: schemes[key].links
+      }
+
+      .active,
+      .open,
+      .current {
+        a {
+          if (dark(schemes[key].links)) {
+            color: lighten(schemes[key].links, 20%)
+          } else {
+            color: darken(schemes[key].links, 20%)
+          }
+        }
       }
     }
   }

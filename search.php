@@ -4,14 +4,13 @@
  */
 namespace k1;
 
+use \k1\Templates as T;
+
 get_header(); ?>
 
 <div class="k1-root k1-root--search-page">
   <div class="k1-search-container k1-container">
-    <form class="k1-search-form" action="/">
-      <input type="search" name="s" placeholder="Search from site">
-      <button type="submit">Search</button>
-    </form>
+    <?=T\Search()?>
 
     <h1>
       Search: <?=get_search_query()?>

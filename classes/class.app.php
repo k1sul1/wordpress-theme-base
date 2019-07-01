@@ -57,11 +57,11 @@ class App {
     return "k1-$basename";
   }
 
-  public function getAssetFilename(string $assetName, string $manifest) {
+  public function getAssetFilename(string $assetName, string $manifest, $forBrowser = true) {
     if (isset($this->manifests[$manifest]) && isset($this->manifests[$manifest][$assetName])) {
       $filename = $this->manifests[$manifest][$assetName];
 
-      return get_stylesheet_directory_uri() . "/dist/$filename";
+      return ($forBrowser ? \get_stylesheet_directory_uri() : \get_stylesheet_directory()) . "/dist/$filename";
     }
 
     return false;

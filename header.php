@@ -27,8 +27,25 @@ use \k1\Templates as T;
   </a>
 
 
-  <header class="site-header">
+  <header class="k1-header k1-header--site">
+    <div class="k1-header__beforeMenu k1-container">
+      <?php
+      if (\has_custom_logo()) {
+        \the_custom_logo();
+      } ?>
 
+      <?=T\Search()?>
+    </div>
+
+      <nav class="k1-navigation k1-navigation--main k1-scheme--base-invert">
+        <div class="k1-container">
+          <?=\wp_nav_menu([
+            "theme_location" => "header-menu",
+          ])?>
+        </div>
+      </nav>
+    </div>
   </header>
+
 
   <main id="content">
