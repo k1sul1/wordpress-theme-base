@@ -13,6 +13,18 @@ get_header(); ?>
   while (have_posts()) { the_post();
     the_content();
   } ?>
+
+  <?php
+  if (\have_comments()) {
+    echo "<div class='k1-commentlist'></div>";
+    echo "<!-- The above element should be populated with React -->";
+  }
+
+  if (\comments_open()) {
+    echo "<div class='k1-commentform'></div>";
+    echo "<!-- The above element should be populated with React -->";
+  }
+  ?>
 </div>
 
 <?php get_footer();

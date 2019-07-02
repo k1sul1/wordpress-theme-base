@@ -33,6 +33,14 @@ async function main () {
 
   createMenuToggles('.k1-menu .menu-item-has-children > a')
 
-  // const { default: App } = await import('./components/react-hot')
-  // ReactDOM.render(<App />, document.querySelector('.site-footer'))
+  const { default: CommentList } = await import('./components/CommentList')
+  const { default: CommentForm } = await import('./components/CommentList')
+
+  Array.from(document.querySelectorAll('.k1-commentlist')).forEach(async (list) => {
+    ReactDOM.render(<CommentList />, list)
+  })
+
+  Array.from(document.querySelectorAll('.k1-commentform')).forEach(async (form) => {
+    ReactDOM.render(<CommentForm />, form)
+  })
 }

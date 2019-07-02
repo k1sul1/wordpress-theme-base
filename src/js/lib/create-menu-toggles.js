@@ -1,4 +1,4 @@
-export default function createMenuToggles(selector) {
+export default function createMenuToggles (selector) {
   return Array.from(document.querySelectorAll(selector)).map((link) => {
     const toggle = document.createElement('span')
     toggle.classList.add('k1-menu__toggle')
