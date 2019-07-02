@@ -4,20 +4,18 @@
     flex-flow: row wrap
     justify-content: space-between
     align-items: center
-    whitepace('padding', ws.section)
+    whitespace('padding', ws.section)
 
     +forPhone() {
       flex-flow: column wrap
       align-items: stretch
-      whitepace('padding', ws.section, '/ 2')
-
+      whitespace('padding', ws.section, '/ 2')
 
       .custom-logo-link {
         display: block
         text-align: center
-        whitespace('padding', ws.section)
+        whitespace('margin', ws.element)
         margin-top: 0
-        doge: 'cate'
       }
     }
   }
@@ -33,6 +31,10 @@
 
   > .k1-container {
     overflow: visible
+
+    +forTablet() {
+      whitespace('padding', ws.element)
+    }
   }
 }
 
@@ -48,9 +50,15 @@
     position: relative
     z-index: 2
     white-space: nowrap
+    vertical-align: text-top
 
     > a {
       padding: r(5px) r(15px)
+      display: block
+      overflow: hidden // Clear possible floats within the link
+    }
+
+    +forTablet() {
       display: block
     }
   }
@@ -72,14 +80,63 @@
         left: 100%
       }
     }
+
+    +forTablet() {
+      padding: 0 r(20px)
+      position: static
+    }
   }
 
   .menu-item-has-children {
+    > a {
+      // The pseudoelement is used to avoid visible content reflows before
+      // JS has kicked in and the menu is inialized.
+      &:after {
+        content: '+'
+        font-size: r(20px)
+        display: inline-block
+        font-family: monospace
+        float: right
+        text-align: center
+        width: r(30px)
+        margin-left: r(5px)
+      }
+
+      // After the menu item has initialized, hide the pseudoelement.
+      &.k1-initialized {
+        &:after {
+          display: none
+        }
+      }
+
+      // Newly created toggle element uses mostly same styles with the pseudoelement.
+      .k1-menu__toggle {
+        float: right
+        margin-left: r(5px)
+
+        &:after {
+          content: '+'
+          font-size: r(20px)
+          display: inline-block
+          font-family: monospace
+          text-align: center
+          width: r(30px)
+        }
+      }
+    }
+
     &:focus-within, // Note that this line breaks IE11
     &:hover,
-    &.open { // .open is useful if you want to force the navigation open with JS
+    &.open {
       > .sub-menu {
         display: block
+      }
+
+      > a {
+        .k1-menu__toggle:after,
+        &:after {
+          content: '\d7'
+        }
       }
     }
   }

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 
 import polyfiller from './lib/polyfiller'
 import mutate from './lib/wds-mutations'
+import createMenuToggles from './lib/create-menu-toggles'
 
 import 'normalize.css'
 import '../styl/client.styl'
@@ -30,6 +31,8 @@ async function main () {
     mutate({ replaceUrlWith: window.wptheme.wpurl })
   }
 
-  const { default: App } = await import('./components/react-hot')
-  ReactDOM.render(<App />, document.querySelector('.site-footer'))
+  createMenuToggles('.k1-menu .menu-item-has-children > a')
+
+  // const { default: App } = await import('./components/react-hot')
+  // ReactDOM.render(<App />, document.querySelector('.site-footer'))
 }

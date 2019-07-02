@@ -45,14 +45,20 @@
 }
 
 .k1-root {
-
+  // Add a gap between the first element and the heading
+  // Unless the first element is X or Y. Add rules as you need them.
+  > *:first-child {
+    &:not(.k1-hero) {
+      margin-top: r(40px)
+    }
+  }
 }
 
 .k1-container {
   width: 100%
   max-width: 100%
   overflow: hidden
-  whitepace('padding', ws.container)
+  whitespace('padding', ws.container)
 
   +forDesktop() {
     max-width: 1366px;
@@ -61,6 +67,6 @@
   }
 
   +forPhone() {
-    whitepace('padding', ws.container, '/ 2')
+    whitespace('padding', ws.container, '/ 2')
   }
 }

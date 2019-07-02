@@ -17,8 +17,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700
   color: inherit
   margin: 0
-  margin-top: ws.elementTop
-  margin-bottom: ws.elementBottom
+  whitespace('margin', ws.element)
 }
 
 h1 {
@@ -64,15 +63,13 @@ h6 {
 p {
   font-family: font.primary
   margin: 0
-  margin-top: ws.elementTop
-  margin-bottom: ws.elementBottom
+  whitespace('margin', ws.element)
   max-width: r(800px)
 }
 
 ul, ol {
   margin: 0
-  margin-top: ws.elementTop
-  margin-bottom: ws.elementBottom
+  whitespace('margin', ws.element)
 
   li {
 

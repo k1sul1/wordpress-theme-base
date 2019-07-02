@@ -15,4 +15,20 @@
       border-radius: 0 !important
     }
   }
+
+  @import '../common/typography'
+
+  // In the frontend, paragraphs and other text content is
+  // wrapped in a div like .k1-tinymce. That luxury is not available in the admin,
+  // so we have to resort to this.
+  // If even this worked.
+  // I don't care enough to fix that now.
+  // .components-autocomplete {
+  //   > p,
+  //   > ol,
+  //   > ul, {
+  //     margin-left: auto
+  //     margin-right: auto
+  //   }
+  // }
 }

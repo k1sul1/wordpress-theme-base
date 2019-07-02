@@ -1,4 +1,4 @@
-whitepace(method = 'margin', values = { left: auto, right: auto }, calc = false) {
+whitespace(method = 'margin', values = { left: auto, right: auto }, calc = false) {
   for key in values {
     if calc != false {
       {method}-{key}: "calc(%s %s)" % (values[key] unquote(calc))
