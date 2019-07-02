@@ -20,6 +20,7 @@ class WysiwygColumns extends \k1\Block {
 
     $classes = array_merge(
       [
+        "k1-block",
         "k1-wcolumns",
         "k1-wcolumns--count-" . count($data['columns']),
       ],

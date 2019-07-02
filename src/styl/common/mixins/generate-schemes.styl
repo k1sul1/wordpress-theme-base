@@ -1,0 +1,60 @@
+generateBaseScheme(key) {
+  background: schemes[key].background
+
+  h1, h2, h3, h4, h5, h6 {
+    color: schemes[key].headings
+  }
+
+  ul, ol, p {
+    color: schemes[key].text
+  }
+
+  a {
+    color: schemes[key].links
+
+    &:hover, &:focus {
+      color: altColour(schemes[key].links)
+      // color: red
+    }
+  }
+
+  .active,
+  .open,
+  .current {
+    a {
+      color: altColour(schemes[key].links)
+    }
+  }
+}
+
+generateAdvancedScheme(key, selector) {
+  {selector}.k1-scheme--background-{key} {
+    background: schemes[key].background
+  }
+
+  {selector}.k1-scheme--headings-{key} {
+    h1, h2, h3, h4, h5, h6 {
+      color: schemes[key].headings
+    }
+  }
+
+  {selector}.k1-scheme--text-{key} {
+    ul, ol, p {
+      color: schemes[key].text
+    }
+  }
+
+  {selector}.k1-scheme--links-{key} {
+    a {
+      color: schemes[key].links
+    }
+
+    .active,
+    .open,
+    .current {
+      a {
+        color: altColour(schemes[key].links)
+      }
+    }
+  }
+}

@@ -14,7 +14,7 @@ $hero = $app->getBlock('Hero');
 
 get_header(); ?>
 
-<div class="k1-root k1-root--archive">
+<div class="k1-root k1-root--archive k1-scheme--base-default">
   <?php
   echo withTransient(capture([$hero, 'render'], [
     'blockSettings' => [ // cloned field

@@ -7,7 +7,7 @@ namespace k1;
 
 get_header(); ?>
 
-<div class="k1-root k1-root--single-post k1-scheme--base-default">
+<div class="k1-root k1-root--front-page k1-scheme--base-default">
   <?php
 
   while (have_posts()) { the_post();

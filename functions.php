@@ -36,6 +36,13 @@ add_action('wp_enqueue_scripts', function() use ($app, $localizeData) {
   $jshandle = $app->enqueue('client.js', 'client');
   $csshandle = $app->enqueue('client.css', 'client');
 
+  \wp_enqueue_style(
+    'k1-google-fonts',
+    'https://fonts.googleapis.com/css?family=Montserrat:700|Source+Sans+Pro:400,700&display=swap',
+    [],
+    null
+  );
+
   wp_localize_script($jshandle, 'wptheme', array_merge($localizeData, [
     'corejs' => $app->getAssetFilename('corejs.js', 'client'),
     'regeneratorRuntime' => $app->getAssetFilename('regeneratorRuntime.js', 'client'),

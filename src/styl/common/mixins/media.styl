@@ -1,0 +1,74 @@
+/**
+ * Media query mixins. Instead of raw media queries, prefer using these.
+ * Customize if necessary.
+ * https://css-tricks.com/logic-in-media-queries/
+ */
+
+forDesktop() {
+  @media (min-width: bp.lg) {
+    {block}
+  }
+}
+
+/**
+ * Tablet media queries often work for phones too, so styles will be applied
+ * to mobile devices as well by default.
+ */
+forTablet(only = false) {
+  if (only == false) {
+    @media (max-width: bp.md) {
+      {block}
+    }
+  } else {
+    @media (min-width: bp.md) and (max-width: bp.lg) {
+      {block}
+    }
+  }
+}
+
+forPhone() {
+  @media (min-width: 0px) and (max-width: bp.sm) {
+    {block}
+  }
+}
+
+forTinyPhone() {
+  @media (max-width: bp.xs) {
+    {block}
+  }
+}
+
+// Match mobile devices (phones and tablets) in landscape
+// Larger breakpoints are *most likely* users that expect
+// a desktop experience due to their screen size
+forLandscape() {
+  @media (orientation:landscape) and (max-width: bp.md) {
+    {block}
+  }
+}
+
+/**
+ * Mixin used to autogenerate classes that can be applied from the GUI.
+ * You're probably doing something wrong if you're using this in your code.
+ *
+ * I haven't figured out a way to automate this; manual work
+ */
+hideForBP(bp) {
+  if (bp == 'xs') {
+    +forTinyPhone() {
+      display: none !important
+    }
+  } else if (bp == 'sm') {
+    +forPhone() {
+      display: none !important
+    }
+  } else if (bp == 'md') {
+    +forTablet(true) {
+      display: none !important
+    }
+  } else if (bp == 'lg') {
+    +forDesktop() {
+      display: none !important
+    }
+  }
+}

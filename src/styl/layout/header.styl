@@ -4,6 +4,22 @@
     flex-flow: row wrap
     justify-content: space-between
     align-items: center
+    whitepace('padding', ws.section)
+
+    +forPhone() {
+      flex-flow: column wrap
+      align-items: stretch
+      whitepace('padding', ws.section, '/ 2')
+
+
+      .custom-logo-link {
+        display: block
+        text-align: center
+        whitespace('padding', ws.section)
+        margin-top: 0
+        doge: 'cate'
+      }
+    }
   }
 
 }

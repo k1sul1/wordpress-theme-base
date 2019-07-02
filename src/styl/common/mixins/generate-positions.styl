@@ -1,0 +1,185 @@
+/**
+ * A monster created as an attempt to have a single place for positioning elements
+ * Might not live long, might live forever.
+ * We'll see.
+ */
+generatePositions(selector, method = 'position') {
+  if (method == 'position') {
+    {selector}.k1-pos {
+      &--leftTop {
+        left: r(20px)
+        top: r(20px)
+      }
+
+      &--centerTop {
+        margin-left: auto
+        margin-right: auto
+        top: r(20px)
+      }
+
+      &--rightTop {
+        right: r(20px)
+        top: r(20px)
+      }
+
+      &--leftCenter {
+        top: 50%
+        transform: translateY(-50%)
+        left: r(20px)
+      }
+
+      &--centerCenter {
+        top: 50%
+        left: 50%
+        transform: translateY(-50%) translateX(-50%)
+      }
+
+      &--rightCenter {
+        top: 50%
+        transform: translateY(-50%)
+        right: r(20px)
+      }
+
+      &--leftBottom {
+        left: r(20px)
+        bottom: r(20px)
+      }
+
+      &--centerBottom {
+        margin-left: auto
+        margin-right: auto
+        bottom: r(20px)
+      }
+
+      &--rightBottom {
+        right: r(20px)
+        bottom: r(20px)
+      }
+    }
+  } else if (method == 'background-position') {
+    {selector}.k1-pos {
+      &--leftTop {
+        background-position: left top
+      }
+
+      &--centerTop {
+        background-position: center top
+      }
+
+      &--rightTop {
+        background-position: right top
+      }
+
+      &--leftCenter {
+        background-position: left center
+      }
+
+      &--centerCenter {
+        background-position: center center
+      }
+
+      &--rightCenter {
+        background-position: right center
+      }
+
+      &--leftBottom {
+        background-position: left bottom
+      }
+
+      &--centerBottom {
+        background-position: center bottom
+      }
+
+      &--rightBottom {
+        background-position: right bottom
+      }
+    }
+  } else if (method == 'object-position') {
+    {selector}.k1-pos {
+      &--leftTop {
+        object-position: left top
+      }
+
+      &--centerTop {
+        object-position: center top
+      }
+
+      &--rightTop {
+        object-position: right top
+      }
+
+      &--leftCenter {
+        object-position: left center
+      }
+
+      &--centerCenter {
+        object-position: center center
+      }
+
+      &--rightCenter {
+        object-position: right center
+      }
+
+      &--leftBottom {
+        object-position: left bottom
+      }
+
+      &--centerBottom {
+        object-position: center bottom
+      }
+
+      &--rightBottom {
+        object-position: right bottom
+      }
+    }
+  } else if (method == 'flex') {
+    // Assuming flex-flow: row nowrap
+
+    {selector}.k1-pos {
+      &--leftTop {
+        align-items: flex-start
+        justify-content: flex-start
+      }
+
+      &--centerTop {
+        align-items: flex-start
+        justify-content: center
+      }
+
+      &--rightTop {
+        align-items: flex-start
+        justify-content: flex-end
+      }
+
+      &--leftCenter {
+        align-items: center
+        justify-content: flex-start
+      }
+
+      &--centerCenter {
+        align-items: center
+        justify-content: center
+      }
+
+      &--rightCenter {
+        align-items: center
+        justify-content: flex-end
+      }
+
+      &--leftBottom {
+        align-items: flex-end
+        justify-content: flex-start
+      }
+
+      &--centerBottom {
+        align-items: flex-end
+        justify-content: center
+      }
+
+      &--rightBottom {
+        align-items: flex-end
+        justify-content: flex-end
+      }
+    }
+  }
+}

@@ -24,6 +24,7 @@ class Hero extends \k1\Block {
 
     $classes = array_merge(
       [
+        "k1-block",
         "k1-hero",
       ],
       \k1\Template\getScheme($data['blockSettings']['scheme']),

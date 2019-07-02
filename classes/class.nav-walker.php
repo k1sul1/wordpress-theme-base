@@ -89,7 +89,6 @@ class NavWalker extends \Walker_Nav_Menu {
 
   public function submenuCssClasses($classes, $item) {
     $classes[] = 'k1-scheme--base-invert';
-    error_log(print_r($classes, true));
 
     return array_filter($classes);
   }

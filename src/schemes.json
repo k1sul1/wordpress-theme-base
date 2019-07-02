@@ -1,14 +1,14 @@
 {
   "default": {
-    "background": "#f1f1f1",
+    "background": "#ffffff",
     "headings": "#222222",
     "text": "#000000",
-    "links": "#666666"
+    "links": "#f707d9"
   },
 
   "invert": {
     "background": "#222222",
-    "headings": "#f1f1f1",
+    "headings": "#ffffff",
     "text": "#ffffff",
     "links": "#f707d9"
   }

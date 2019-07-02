@@ -1,66 +1,10 @@
 for key in schemes {
   .k1-scheme--base-{key} {
-    background: schemes[key].background
-
-    h1, h2, h3, h4, h5, h6 {
-      color: schemes[key].headings
-    }
-
-    ul, ol, p {
-      color: schemes[key].text
-    }
-
-    a {
-      color: schemes[key].links
-    }
-
-    .active,
-    .open,
-    .current {
-      a {
-        if (dark(schemes[key].links)) {
-          color: lighten(schemes[key].links, 20%)
-        } else {
-          color: darken(schemes[key].links, 20%)
-        }
-      }
-    }
+    generateBaseScheme(key)
   }
 
 
   .k1-scheme {
-    &.k1-scheme--background-{key} {
-      background: schemes[key].background
-    }
-
-    &.k1-scheme--headings-{key} {
-      h1, h2, h3, h4, h5, h6 {
-        color: schemes[key].headings
-      }
-    }
-
-    &.k1-scheme--text-{key} {
-      ul, ol, p {
-        color: schemes[key].text
-      }
-    }
-
-    &.k1-scheme--links-{key} {
-      a {
-        color: schemes[key].links
-      }
-
-      .active,
-      .open,
-      .current {
-        a {
-          if (dark(schemes[key].links)) {
-            color: lighten(schemes[key].links, 20%)
-          } else {
-            color: darken(schemes[key].links, 20%)
-          }
-        }
-      }
-    }
+    generateAdvancedScheme(key, '.k1-scheme')
   }
 }

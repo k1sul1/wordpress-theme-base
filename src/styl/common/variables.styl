@@ -1,9 +1,10 @@
+colours = json('../../colours.json', { hash: true })
 schemes = json('../../schemes.json', { hash: true })
 bp = json('../../breakpoints.json', { hash: true })
 
 font = {
-  primary: "'Source Sans Pro', sans-serif",
-  secondary: "Montserrat, serif",
+  primary: unquote("'Source Sans Pro', sans-serif"),
+  secondary: unquote("Montserrat, sans-serif"),
 }
 
 // Short for font-size
@@ -19,14 +20,20 @@ fs = {
   // add more as necessary
 }
 
-// Short for whitespace, use for paddings and margins
+// Short for whitespace, used for paddings and margins, and by mixins
 ws = {
-  sectionTop: r(50px)
-  sectionBottom: r(75px)
+  element: {
+    top: r(20px)
+    bottom: r(20px)
+  }
 
-  elementTop: r(20px)
-  elementBottom: r(20px)
+  section: {
+    top: r(50px)
+    bottom: r(75px)
+  }
 
-  containerLeft: r(20px)
-  containerRight: r(20px)
+  container: {
+    left: r(20px)
+    right: r(20px)
+  }
 }
