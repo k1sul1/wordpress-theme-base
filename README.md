@@ -21,7 +21,7 @@ Hopefully just enough for you to build the next best WordPress site, without get
 - Reusable & combinable data-driven templates
 - Theme image optimization (Imagemin)
 - Sourcemaps to help you locate troublemakers in CSS & JS
-- Integrates with [k1 kit](https://github.com/k1sul1/k1kit)*
+- Integrates with [k1 kit](https://github.com/k1sul1/k1kit)
 
 ### Nice to haves
 - Hot module reloading (HMR) for CSS & _compatible_ JS
@@ -34,7 +34,7 @@ Hopefully just enough for you to build the next best WordPress site, without get
 - `<title>` is prefixed with the current environment to avoid confusion when working with multiple instances
 - Namespaces
 
-*: Not tested in an actual production project / not ready for the world yet.
+*: Not tested in an actual production project, probably works just fine
 
 ## Requirements
 
@@ -48,7 +48,9 @@ Hopefully just enough for you to build the next best WordPress site, without get
   - If your site has only one language, don't install Polylang, and just change `languageSlugs` option in `functions.php` to match your language.
 - [k1 kit](https://github.com/k1sul1/k1kit)
   - Makes the theme faster by utilizing transients. If you don't need transients, you don't need this either.
+  - Any (future) REST routes are created with it's API
   - Transients created by the plugin are somewhat manageable, but the plugin is still in early development. I use it in production in some sites, you do you.
+  - **Probably** becomes a hard requirement in the future as I move helpers and shit from here to there
 - The SEO Framework
   - Unlike Yoast, has no bloat, and has all the necessary features
   - Ensures that a `<title>` element always exists; WP frontpages often lack them.
@@ -168,6 +170,21 @@ When calling manually, you have to make sure that you use the same datastructure
 Good luck. It's possible, but something that I'm not interested in supporting.
 
 Create a new entry to `config/webpack.client.js` and start coding.
+
+### How to create a new entry to Webpack configuration?
+Pretty easy. Edit the `entry` object in the configuration file of your choice.
+```
+entry: {
+  admin: ['react-hot-loader/patch', path.join(source, 'js', 'admin')],
+  editor: ['react-hot-loader/patch', path.join(source, 'js', 'editor')], // this is new
+},
+```
+
+Then create a file to src/js, in this case it's `editor.js`. If you want to generate a CSS file for the entry, import a CSS / Stylus file in it, just like in `client.js`.
+
+After rebuilding or restarting the build, your new entry should be present in the generated asset manifest.
+
+You don't have to include 'react-hot-loader/patch' in the entry, but it will not do any harm either.
 
 ### How does HMR work?
 With black magic. Once you understand that, it's pretty simple. CSS is stateless and easy to replace, but JavaScript is trickier. You explicitly have to declare something as hot reloadable, but this can be done with abstractions, such as react-hot-loader.
