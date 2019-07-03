@@ -1,6 +1,18 @@
 <?php
 namespace k1;
 
+/**
+ * Load and initialize k1kit if not done already
+ *
+ */
+if (!class_exists('\k1\App')) {
+  if (is_dir(WP_PLUGIN_DIR . '/k1kit')) {
+    require_once WP_PLUGIN_DIR . '/k1kit/src/php/init.php';
+  } else {
+    throw new \Exception("k1kit wasn't found. The theme can't be used without it.");
+  }
+}
+
 foreach (glob(dirname(__FILE__) . "/lib/*.php") as $filename) {
   require_once($filename);
 }
@@ -16,9 +28,12 @@ function app($options = []) {
 $app = app([
   'blocks' => glob(__DIR__ . '/blocks/*.php'),
   'templates' => glob(__DIR__ . '/templates/*.php'),
-  'languageSlugs' => ['en']
+  'languageSlugs' => ['en'],
+  'manifests' => [
+    'client' => __DIR__ . '/dist/client-manifest.json',
+    'admin' => __DIR__ . '/dist/admin-manifest.json'
+  ],
 ]);
-
 $siteurl = get_site_url();
 
 /**
@@ -33,7 +48,8 @@ $localizeData = [
 ];
 
 add_action('wp_enqueue_scripts', function() use ($app, $localizeData) {
-  $jshandle = $app->enqueue('client.js', 'client');
+  $jshandle = $app->manifests['client']->enqueue('client.js');
+
   \wp_enqueue_style(
     'k1-google-fonts',
     'https://fonts.googleapis.com/css?family=Montserrat:700|Source+Sans+Pro:400,700&display=swap',
@@ -41,17 +57,16 @@ add_action('wp_enqueue_scripts', function() use ($app, $localizeData) {
     null
   );
 
-  $csshandle = $app->enqueue('client.css', 'client');
+  $csshandle = $app->manifests['client']->enqueue('client.css');
 
   wp_localize_script($jshandle, 'wptheme', array_merge($localizeData, [
-    'corejs' => $app->getAssetFilename('corejs.js', 'client'),
-    'regeneratorRuntime' => $app->getAssetFilename('regeneratorRuntime.js', 'client'),
+    'corejs' => $app->manifests['client']->getAssetFilename('corejs.js'),
+    'regeneratorRuntime' => $app->manifests['client']->getAssetFilename('regeneratorRuntime.js'),
   ]));
 });
 
 add_action('admin_enqueue_scripts', function() use ($app, $localizeData) {
-  $siteurl = get_site_url();
-  $jshandle = $app->enqueue('admin.js', 'admin');
+  $jshandle = $app->manifests['admin']->enqueue('admin.js');
   \wp_enqueue_style(
     'k1-google-fonts',
     'https://fonts.googleapis.com/css?family=Montserrat:700|Source+Sans+Pro:400,700&display=swap',
@@ -59,35 +74,7 @@ add_action('admin_enqueue_scripts', function() use ($app, $localizeData) {
     null
   );
 
-  $csshandle = $app->enqueue('admin.css', 'admin');
+  $csshandle = $app->manifests['admin']->enqueue('admin.css');
 
   wp_localize_script($jshandle, 'wptheme', $localizeData);
 });
-
-/**
- * Create options pages for all languages.
- * Please note that you have to create the field groups yourself,
- * and use the clone field with the prefix setting in it.
- */
-if (function_exists('acf_add_options_page')) {
-  $languages = $app->i18n->getLanguages();
-  $parent = acf_add_options_page([
-    "page_title" => "Options Page",
-    "menu_slug" => "acf-opts",
-  ]);
-
-  foreach ($languages as $lang) {
-    $fields = [
-      "page_title" => "Options $lang",
-      "menu_title" => "Options $lang",
-      "parent_slug" => $parent["menu_slug"],
-    ];
-
-    // Set first language as first
-    if ($lang === $languages[0]) {
-      $fields["menu_slug"] = "acf-options";
-    }
-
-    acf_add_options_sub_page($fields);
-  }
-}

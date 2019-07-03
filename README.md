@@ -11,30 +11,28 @@ Work in progress, forever.
 ## Features
 
 Hopefully just enough for you to build the next best WordPress site, without getting in your way.
+Everything from [k1sul1/k1kit](https://github.com/k1sul1/k1kit) and a few cherries on top. See it for more detailed description.
 
-### The real deal
-- Custom Gutenberg block support
- - With a few generic blocks
-- Multilinguality support*
-  - including, but not limited to: ACF options pages & theme strings
-- Automagical asset manifests, ensures that visitors always see the latest assets
+- Custom Gutenberg block toolkit
+- Multilinguality support using Polylang, falling back to Core
 - Reusable & combinable data-driven templates
+  - Since there's no JSX support for PHP *yet*, they're admittedly a bit ugly
+  - If you don't like the style, plugging Twig or some other solution should be possible
+- Automagical asset manifests, ensures that visitors always see the latest assets and cachebusting is history
+- REST API candy
+- Transient overhaul
 - Theme image optimization (Imagemin)
 - Sourcemaps to help you locate troublemakers in CSS & JS
-- Integrates with [k1 kit](https://github.com/k1sul1/k1kit)
-
-### Nice to haves
 - Hot module reloading (HMR) for CSS & _compatible_ JS
 - OOTB React support
 - CSS preprocessor support
-  - I prefer Stylus, if you want to use SCSS, that's easy. Install `node-sass` & `sass-loader`, replace `stylus-loader` with `scss-loader` and `.styl` with `.scss` in webpack config. Porting the styles shouldn't be too cumbersome.
+  - I prefer Stylus, if you want to use SCSS, that's easy. Install `node-sass` & `sass-loader`, replace `stylus-loader` with `scss-loader` and `.styl` with `.scss` in webpack config.
+  - Switching isn't worth it though, Stylus is very similar to SCSS, key differences are that there are no partials and it resembles JS more
 - PostCSS
   - Autoprefixer
   - Flexbugs fixer
 - `<title>` is prefixed with the current environment to avoid confusion when working with multiple instances
 - Namespaces
-
-*: Not tested in an actual production project, probably works just fine
 
 ## Requirements
 
@@ -42,15 +40,12 @@ Hopefully just enough for you to build the next best WordPress site, without get
 - Node 10 on the host machine
 - ACF PRO 5.8
   - If you don't want to create custom blocks, free version should work as well
+- [k1 kit](https://github.com/k1sul1/k1kit)
+  - The core of this theme
 
 ## Recommendations
 - Polylang
   - If your site has only one language, don't install Polylang, and just change `languageSlugs` option in `functions.php` to match your language.
-- [k1 kit](https://github.com/k1sul1/k1kit)
-  - Makes the theme faster by utilizing transients. If you don't need transients, you don't need this either.
-  - Any (future) REST routes are created with it's API
-  - Transients created by the plugin are somewhat manageable, but the plugin is still in early development. I use it in production in some sites, you do you.
-  - **Probably** becomes a hard requirement in the future as I move helpers and shit from here to there
 - The SEO Framework
   - Unlike Yoast, has no bloat, and has all the necessary features
   - Ensures that a `<title>` element always exists; WP frontpages often lack them.
