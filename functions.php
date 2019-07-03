@@ -34,14 +34,14 @@ $localizeData = [
 
 add_action('wp_enqueue_scripts', function() use ($app, $localizeData) {
   $jshandle = $app->enqueue('client.js', 'client');
-  $csshandle = $app->enqueue('client.css', 'client');
-
   \wp_enqueue_style(
     'k1-google-fonts',
     'https://fonts.googleapis.com/css?family=Montserrat:700|Source+Sans+Pro:400,700&display=swap',
     [],
     null
   );
+
+  $csshandle = $app->enqueue('client.css', 'client');
 
   wp_localize_script($jshandle, 'wptheme', array_merge($localizeData, [
     'corejs' => $app->getAssetFilename('corejs.js', 'client'),
@@ -52,6 +52,13 @@ add_action('wp_enqueue_scripts', function() use ($app, $localizeData) {
 add_action('admin_enqueue_scripts', function() use ($app, $localizeData) {
   $siteurl = get_site_url();
   $jshandle = $app->enqueue('admin.js', 'admin');
+  \wp_enqueue_style(
+    'k1-google-fonts',
+    'https://fonts.googleapis.com/css?family=Montserrat:700|Source+Sans+Pro:400,700&display=swap',
+    [],
+    null
+  );
+
   $csshandle = $app->enqueue('admin.css', 'admin');
 
   wp_localize_script($jshandle, 'wptheme', $localizeData);

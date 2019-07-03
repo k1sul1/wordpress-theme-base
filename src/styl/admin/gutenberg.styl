@@ -1,7 +1,12 @@
-.edit-post-visual-editor .editor-post-title,
 .edit-post-visual-editor .editor-block-list__block {
-	// max-width:	1100px;
-  max-width: 100%;
+  @import '../common/typography'
+  // text-align: center
+
+  // SVGs break a bit. Unset their styles.
+  svg:not(:root) {
+    width: initial
+    height: initial
+  }
 
   // Position field
   .acf-field-5d1655410669e {
@@ -15,20 +20,35 @@
       border-radius: 0 !important
     }
   }
+}
 
-  @import '../common/typography'
+// hide font-size selection
+// remove this if you want to allow user selected font sizes
+.components-panel__body.blocks-font-size .components-base-control:first-of-type {
+  display: none
+}
 
-  // In the frontend, paragraphs and other text content is
-  // wrapped in a div like .k1-tinymce. That luxury is not available in the admin,
-  // so we have to resort to this.
-  // If even this worked.
-  // I don't care enough to fix that now.
-  // .components-autocomplete {
-  //   > p,
-  //   > ol,
-  //   > ul, {
-  //     margin-left: auto
-  //     margin-right: auto
-  //   }
-  // }
+// editor title
+.editor-post-title__block .editor-post-title__input {
+  font-family: font.secondary
+  min-height: auto
+  text-align: center
+}
+
+// main column width
+:root body.block-editor-page .editor-post-title__block,
+:root body.block-editor-page .editor-default-block-appender,
+:root body.block-editor-page .editor-block-list__block {
+  max-width: width.block.default
+}
+
+// width of "wide" blocks
+:root body.block-editor-page .editor-block-list__block[data-align="wide"] {
+  max-width: width.block.wide
+}
+
+// width of "full-wide" blocks
+:root body.block-editor-page .editor-block-list__block[data-align="full"] {
+  max-width: width.block.full
+  whitespace('margin', ws.center)
 }

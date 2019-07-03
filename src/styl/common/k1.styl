@@ -34,20 +34,65 @@
   }
 }
 
-.k1-coreblock {
-  max-width: 100%
-  overflow: hidden
-}
-
 .k1-block {
   max-width: 100%
   overflow: hidden
 }
 
+.k1-gutenberg {
+  // Align inline-block elements to the center, as margin: 0 auto won't work
+  text-align: center
+
+  .alignwide {
+    max-width: width.block.wide
+  }
+
+  .alignfull {
+    max-width: width.block.full
+   }
+
+  .wp-embed-aspect {
+    &-16-9 {
+      .wp-block-embed__wrapper {
+        height: 0;
+        overflow: hidden;
+        padding-top: 56.25%;
+        position: relative;
+
+        iframe {
+          height: 100%;
+          max-width: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  > * {
+    text-align: left // Doesn't prevent editor overrides
+    max-width: width.block.default
+    whitepace('margin', ws.center)
+    whitespace('padding', ws.container)
+
+    +forDesktop() {
+      max-width: 1366px;
+      margin-left: auto
+      margin-right: auto
+    }
+
+    +forPhone() {
+      whitespace('padding', ws.container, '/ 2')
+    }
+  }
+}
+
 .k1-root {
   // Add a gap between the first element and the heading
   // Unless the first element is X or Y. Add rules as you need them.
-  > *:first-child {
+  > .k1-gutenberg > *:first-child {
     &:not(.k1-hero) {
       margin-top: r(40px)
     }

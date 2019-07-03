@@ -135,6 +135,12 @@ function content($content = null) {
   return apply_filters("the_content", $content);
 }
 
+function gutenbergContent() {
+  echo "<div class='k1-gutenberg'>";
+  \the_content();
+  echo "</div>";
+}
+
 function wrapper($wrappable, $options = []) {
   $options = params([
     "element" => "div",

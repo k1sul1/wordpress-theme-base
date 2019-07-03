@@ -1,0 +1,37 @@
+.k1-gutenberg {
+  // These styles will only apply in the frontend
+
+  [class*="wp-block"] {
+    // Applied to all core blocks
+  }
+
+  .wp-block-columns {
+    max-width: width.block.wide
+  }
+
+  .wp-block-image {
+    display: inline-block
+
+    figcaption {
+      color: colours.pink
+    }
+
+    &.alignwide, &.alignfull {
+      display: block
+
+      img, figure {
+        width: 100%
+      }
+    }
+
+    &.is-resized {
+      display: block
+      text-align: center
+      whitespace('margin', ws.center)
+
+      figcaption {
+        display: block
+      }
+    }
+  }
+}
