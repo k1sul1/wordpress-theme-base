@@ -15,14 +15,16 @@ add_action("init", function () {
  */
 $menu_lookup = [];
 add_filter("nav_menu_css_class", function ($classes, $item) use (&$menu_lookup) {
-  $menu_lookup[$item->ID] = [
-    "parent" => $item->menu_item_parent,
-    "level" => $item->menu_item_parent !== '0' // Why is it a string?
-      ? $menu_lookup[(int) $item->menu_item_parent]["level"] + 1
-      : 0
-  ];
+  if (!empty($item->menu_item_parent)) {
+    $menu_lookup[$item->ID] = [
+      "parent" => $item->menu_item_parent,
+      "level" => $item->menu_item_parent !== '0' // Why is it a string?
+        ? $menu_lookup[(int) $item->menu_item_parent]["level"] + 1
+        : 0
+    ];
 
-  $classes[] = "level-{$menu_lookup[$item->ID]["level"]}";
+    $classes[] = "level-{$menu_lookup[$item->ID]["level"]}";
+  }
   return $classes;
 }, 999999, 2); // We want that the class is the last one.
 
