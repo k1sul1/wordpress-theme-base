@@ -74,7 +74,7 @@ add_action('admin_enqueue_scripts', function() use ($app, $localizeData) {
     null
   );
 
-  $csshandle = $app->manifests['admin']->enqueue('admin.css');
+  // $csshandle = $app->manifests['admin']->enqueue('admin.css');
 
   wp_localize_script($jshandle, 'wptheme', $localizeData);
 });

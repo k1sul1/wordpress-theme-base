@@ -1,4 +1,4 @@
-import '../styl/admin.styl'
+// import '../styl/admin.styl'
 
 /**
  * Redirect user to true admin URL if accessed from a different URL. Admin does not work
