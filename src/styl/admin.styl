@@ -4,6 +4,11 @@
 @import 'common/schemes'
 @import 'common/k1'
 
-@import 'admin'
+// Something changed in the way Webpack resolves paths
+// @import 'admin' seems to cause a circular reference
+// hence this ugly direct path.
+@import './admin/index' 
+
+// These imports are seemingly fine. 
 @import 'templates'
 @import 'blocks'
