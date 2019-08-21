@@ -37,14 +37,13 @@ use \k1\Templates as T;
       <?=T\Search()?>
     </div>
 
-      <nav class="k1-navigation k1-navigation--main k1-scheme--base-invert">
-        <div class="k1-container">
-          <?=\wp_nav_menu([
-            "theme_location" => "header-menu",
-          ])?>
-        </div>
-      </nav>
-    </div>
+    <nav class="k1-navigation k1-navigation--main k1-scheme--base-invert">
+      <div class="k1-container">
+        <?=\wp_nav_menu([
+          "theme_location" => "header-menu",
+        ])?>
+      </div>
+    </nav>
   </header>
 
 
