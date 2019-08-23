@@ -39,9 +39,13 @@ use \k1\Templates as T;
 
     <nav class="k1-navigation k1-navigation--main k1-scheme--base-invert">
       <div class="k1-container">
-        <?=\wp_nav_menu([
-          "theme_location" => "header-menu",
-        ])?>
+        <?php if (\has_nav_menu('header-menu')) {
+          \wp_nav_menu([
+            "theme_location" => "header-menu",
+          ]);
+        } else {
+          echo "<p>Header menu is empty.</p>";
+        }?>
       </div>
     </nav>
   </header>
