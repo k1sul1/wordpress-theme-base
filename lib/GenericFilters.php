@@ -56,6 +56,12 @@ function stripEmptyParagraphs($content) {
 
 add_filter("the_content", "\\k1\\GenericFilters\\stripEmptyParagraphs");
 
+function removeFUCKINGmargin() {
+  remove_action('wp_head', '_admin_bar_bump_cb');
+}
+
+add_action('get_header', '\\k1\\GenericFilters\\removeFUCKINGmargin');
+
 // Disable "traffic lights"
 add_filter("the_seo_framework_show_seo_column", "__return_false");
 
