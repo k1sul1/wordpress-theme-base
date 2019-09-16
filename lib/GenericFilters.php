@@ -65,12 +65,64 @@ add_action('get_header', '\\k1\\GenericFilters\\removeFUCKINGmargin');
 // Disable "traffic lights"
 add_filter("the_seo_framework_show_seo_column", "__return_false");
 
+
+function fixArchiveTitle($title) {
+  $app = \k1\app();
+
+  if (is_home()) {
+    $title = $app->i18n->getText('Uutiset');
+  } elseif (is_category()) {
+      $title = single_cat_title($app->i18n->getText('Category') . ': ', false);
+  } elseif (is_tag()) {
+      $title = single_tag_title($app->i18n->getText('Tag') . ': ', false);
+  } elseif (is_author()) {
+      $title = '<span class="vcard">' . get_the_author() . '</span>';
+  } elseif (is_year()) {
+      $title = get_the_date(_x('Y', 'yearly archives date format'));
+  } elseif (is_month()) {
+      $title = get_the_date(_x('F Y', 'monthly archives date format'));
+  } elseif (is_day()) {
+      $title = get_the_date(_x('F j, Y', 'daily archives date format'));
+  } elseif (is_tax('post_format')) {
+      // Who uses these? I don't.
+      if ( is_tax('post_format', 'post-format-aside')) {
+          $title = _x('Asides', 'post format archive title');
+      } elseif ( is_tax('post_format', 'post-format-gallery')) {
+          $title = _x('Galleries', 'post format archive title' );
+      } elseif ( is_tax('post_format', 'post-format-image')) {
+          $title = _x('Images', 'post format archive title');
+      } elseif ( is_tax('post_format', 'post-format-video')) {
+          $title = _x('Videos', 'post format archive title');
+      } elseif ( is_tax('post_format', 'post-format-quote')) {
+          $title = _x('Quotes', 'post format archive title');
+      } elseif ( is_tax('post_format', 'post-format-link')) {
+          $title = _x('Links', 'post format archive title');
+      } elseif ( is_tax('post_format', 'post-format-status')) {
+          $title = _x('Statuses', 'post format archive title');
+      } elseif ( is_tax('post_format', 'post-format-audio')) {
+          $title = _x('Audio', 'post format archive title');
+      } elseif ( is_tax('post_format', 'post-format-chat')) {
+          $title = _x('Chats', 'post format archive title');
+      }
+  } elseif (is_post_type_archive()) {
+      $title = post_type_archive_title('', false);
+  } elseif (is_tax()) {
+      $title = single_term_title('', false);
+  } else {
+      $title = $app->i18n->getText('Archive');
+  }
+  return $title;
+}
+
+add_filter('get_the_archive_title', "\\k1\\GenericFilters\\fixArchiveTitle");
+
+
 /**
  * Add %home% tag to Breadcrumb NavXT
  */
 add_filter("bcn_template_tags", function ($replacements, $type, $id) {
   $app = \k1\app();
-  $replacements["%home%"] = $app->i18n->getText("Breadcrumb: Home");
+  $replacements["%home%"] = $app->i18n->getText("Home");
 
   return $replacements;
 }, 3, 10);
