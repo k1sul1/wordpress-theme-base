@@ -37,8 +37,8 @@ add_action("after_setup_theme", function () {
   // Edit the available font sizes.
   // NOTE: The font-size selection element is hidden with CSS in this theme.
   add_theme_support('editor-font-sizes', [
-    ['name' => $app->i18n->getText('Normal'), 'slug' => 'normal', 'size' => 18],
-    ['name' => $app->i18n->getText('Large'), 'slug' => 'large', 'size' => 22],
+    ['name' => $app->i18n->getText('Font-size: Normal'), 'slug' => 'normal', 'size' => 18],
+    ['name' => $app->i18n->getText('Font-size: Large'), 'slug' => 'large', 'size' => 22],
   ]);
   add_theme_support('disable-custom-font-sizes');
 
