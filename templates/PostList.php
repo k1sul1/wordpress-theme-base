@@ -30,8 +30,8 @@ function PostList($data = []) {
 
     <div class="k1-postlist__pagination">
       <?=\paginate_links([
-        'prev_text' => $app->i18n->getText('Previous'),
-        'next_text' => $app->i18n->getText('Next'),
+        'prev_text' => $app->i18n->getText('Pagination: Previous'),
+        'next_text' => $app->i18n->getText('Pagination: Next'),
       ])?>
     </div>
   </div><?php

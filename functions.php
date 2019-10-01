@@ -36,6 +36,24 @@ $app = app([
 ]);
 $siteurl = get_site_url();
 
+$strings = [
+  'Font-size: Normal' => 'Normal',
+  'Font-size: Large' => 'Large',
+  'Pagination: Previous' => 'Previous',
+  'Pagination: Next' => 'Next',
+  'ACF: Avoid hiding' => 'Avoid hiding elements if possible, and provide an alternate element, visible only to that breakpoint.',
+  'Title: News' => 'News',
+  'Title: Category' => 'Category',
+  'Title: Tag' => 'Tag',
+  'Title: Archive' => 'Archive',
+  'Breadcrumb: Home' => 'Home',
+  'Placeholder: Find from page',
+];
+
+foreach ($strings as $k => $v) {
+  $app->i18n->registerString($k, $v);
+}
+
 /**
  * Pass useful data to the frontend, instead of crawling these from the DOM.
  * Path can be used for dynamic imports, and wpurl for making HTTP requests,

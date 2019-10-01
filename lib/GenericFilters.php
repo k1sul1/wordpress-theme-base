@@ -70,11 +70,11 @@ function fixArchiveTitle($title) {
   $app = \k1\app();
 
   if (is_home()) {
-    $title = $app->i18n->getText('Uutiset');
+    $title = $app->i18n->getText('Title: News');
   } elseif (is_category()) {
-      $title = single_cat_title($app->i18n->getText('Category') . ': ', false);
+      $title = single_cat_title($app->i18n->getText('Title: Category') . ': ', false);
   } elseif (is_tag()) {
-      $title = single_tag_title($app->i18n->getText('Tag') . ': ', false);
+      $title = single_tag_title($app->i18n->getText('Title: Tag') . ': ', false);
   } elseif (is_author()) {
       $title = '<span class="vcard">' . get_the_author() . '</span>';
   } elseif (is_year()) {
@@ -109,7 +109,7 @@ function fixArchiveTitle($title) {
   } elseif (is_tax()) {
       $title = single_term_title('', false);
   } else {
-      $title = $app->i18n->getText('Archive');
+      $title = $app->i18n->getText('Title: Archive');
   }
   return $title;
 }
@@ -122,7 +122,7 @@ add_filter('get_the_archive_title', "\\k1\\GenericFilters\\fixArchiveTitle");
  */
 add_filter("bcn_template_tags", function ($replacements, $type, $id) {
   $app = \k1\app();
-  $replacements["%home%"] = $app->i18n->getText("Home");
+  $replacements["%home%"] = $app->i18n->getText('Breadcrumb: Home');
 
   return $replacements;
 }, 3, 10);

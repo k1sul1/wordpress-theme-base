@@ -11,7 +11,7 @@ function Search($data = []) {
   $data = \k1\params([
     'classList' => ['k1-search-form'],
     'action' => '/',
-    'placeholder' => 'Find from page',
+    'placeholder' => 'Placeholder: Find from page',
   ], $data);
   ?>
 

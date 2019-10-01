@@ -37,7 +37,7 @@ if (is_admin()) {
   }
 
   $populator = function($field) use ($options) {
-    $field['instructions'] = \k1\app()->i18n->getText("Avoid hiding elements if possible, and provide an alternate element, visible only to that breakpoint.");
+    $field['instructions'] = \k1\app()->i18n->getText("ACF: Avoid hiding");
     $field['choices'] = $options;
 
     return $field;
