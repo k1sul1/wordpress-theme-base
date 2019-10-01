@@ -47,6 +47,7 @@ $strings = [
   'Title: Tag' => 'Tag',
   'Title: Archive' => 'Archive',
   'Breadcrumb: Home' => 'Home',
+  'Placeholder: Find from page',
 ];
 
 foreach ($strings as $k => $v) {
