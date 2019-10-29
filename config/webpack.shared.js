@@ -30,7 +30,6 @@ const { webpack } = config
 const host = process.env.HOST || webpack.serverAddress || 'localhost'
 const port = process.env.PORT || 8080
 const isHTTPS = webpack.wordpressURL.includes('https')
-const publicPath = (isHTTPS ? 'https' : 'http') + `://${host}${webpack.publicPath}`
 
 const manifestPlugin = (opts = {}) => ({
   plugins: [
@@ -177,6 +176,9 @@ const cssExtractPlugin = (env) => ({
 })
 
 const genericPlugins = (env) => {
+  // const publicPath = (isHTTPS ? 'https' : 'http') + `://${host}${webpack.publicPath}`
+  const publicPath = '' // There's no real reason to hardcode theme name into the assets
+  
   let conf = {
     output: {
       publicPath,
