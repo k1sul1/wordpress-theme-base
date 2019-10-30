@@ -22,6 +22,9 @@ use \k1\Templates as T;
     !$is_anon_user ? 'user-logged-in' : 'user-not-logged-in',
   ]);?>>
 
+  <!-- Prevent FOUC in firefox, see https://bugzilla.mozilla.org/show_bug.cgi?id=1404468#c68 -->
+  <script>0</script>
+    
   <a class="skip-link sr-text" href="#content">
     Skip to content
   </a>
