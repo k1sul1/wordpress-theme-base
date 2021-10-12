@@ -6,6 +6,8 @@ import '../styl/admin.styl'
  *
  * NOTE: This does not work as-is if your site doesn't live in webroot, but that's pretty rare, esp. for new sites.
  */
+
+/* // Commented out by default
 if (window.location.origin !== window.wptheme.wpurl) {
   const message = `WARNING!
 
@@ -24,3 +26,4 @@ Press OK to be redirected to the correct domain.
     window.location.href = url
   }
 }
+*/

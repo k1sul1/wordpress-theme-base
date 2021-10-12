@@ -69,6 +69,8 @@ To create a production build, run `npm run build`.
 In webpack-dev-server, CSS should update automatically without reloading, as should any module.hot compatible code. React should work out of the box. Due to recent ~~technological advancements~~ configuration changes,
 it's now possible to run WDS "in the background". Previously you've had to open `http://yoursite.local:8080` and develop in that, but that shouldn't be necessary any more. If it doesn't work, try :8080 and submit an issue.
 
+It is possible to use /wp-admin through WDS, but there be dragons. Possibly. You can't fight the dragons, but you can go around them by ensuring that you're always using the admin through the correct domain and not through the proxy. There's a snippet in src/js/admin.js that you can uncomment to ensure you're always using it through the correct domain.
+
 ## Help section
 ### I don't want to use React
 That's ok. Removing React from the bundles is easy with minor configuration modifications.
